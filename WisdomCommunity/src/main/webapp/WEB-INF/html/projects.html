@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Projects</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="keywords" content="" />
+	<script
+		type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+	<!-- css -->
+	<link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+	<link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
+	<link rel="stylesheet" href="css/font-awesome.css" type="text/css" media="all" />
+	<link rel="stylesheet" href="css/colorbox.css" type="text/css" media="all" />
+	<link rel="stylesheet" href="css/reset.css" />
+	<link rel="stylesheet" href="css/public.css" />
+	<link rel="stylesheet" href="css/index.css" />
+	<!--// css -->
+	<!-- font -->
+	<link href="http://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+	<link
+		href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic'
+		rel='stylesheet' type='text/css'>
+	<!-- //font -->
+	<script src="js/jquery-1.11.1.min.js"></script>
+	<script src="js/bootstrap.js"></script>
+	<script src="layui/layui.js" charset="utf-8"></script>
+	<script src="js/login.js"></script>
+</head>
+
+<body>
+	<div class="header-w3layoutstop">
+		<div class="container">
+			<div class="hdr-w3left navbar-left">
+				<p><span class="glyphicon glyphicon-home" style="color: #fff"></span> WisdomCommunity </p>
+			</div>
+			<div class="search-grid">
+				<button class="btn1"><i class="fa fa-cloud" aria-hidden="true"></i> 登录社区</button>
+			</div>
+		</div>
+	</div>
+	<!-- navigation -->
+	<div class="nav-links">
+		<nav class="navbar navbar-inverse">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="indexPage">
+						<h1>智慧家园</h1>
+					</a>
+				</div>
+				<div class="collapse navbar-collapse" id="myNavbar">
+					<ul class="nav navbar-nav link-effect">
+						<li><a href="indexPage">主页</a></li>
+						<li><a href="servicesPage">社区拼车</a></li>
+						<li class="active"><a href="projectsPage">社区闲购</a></li>
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span
+									data-hover="Short Codes">生活服务</span> <b class="caret"></b></a>
+							<ul class="dropdown-menu agile_short_dropdown">
+								<li><a href="iconsPage">我要报修</a></li>
+								<li><a href="typographyPage">我要缴费</a></li>
+							</ul>
+						</li>
+						<li class="dropdown" id="user_info">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span
+									id="user_name" data-hover="Short Codes"></span> <b class="caret"></b></a>
+							<ul class="dropdown-menu agile_short_dropdown">
+								<li><a id="edit_password" href="javascript:;">修改密码</a></li>
+								<li><a id="owner_logout" href="javascript:;">退出登录</a></li>
+							</ul>
+						</li>
+						<li><a href="contactPage">联系我们</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</div>
+	<!-- /navigation -->
+	<!-- banner-->
+	<div class="w3layouts-banner-slider-1">
+	</div>
+	<!-- //banner -->
+
+	<!-- projects -->
+	<div class="portfolio">
+		<div class="container">
+			<div class="indexMain">
+				<div class="indexMain_left">
+					<div class="indexMain_left_con" style="display: inline-block;">
+						<!--有主题图循环开始-->
+						<div class="indexCon_msg" style="display: inline-block;">
+							<div class="indexCon_msg_pic">
+								<img alt="" src="http://localhost:8080/WisdomCommunity/headicon/timg.jpg"
+									style="width: 60%;" />
+							</div>
+							<div class="indexCon_msg_detail" style="display: inline-block;">
+								<a href="">
+									<div class="indexCon_msg_detail_tittle">
+										<span>管理员</span>
+										<p>关注上海车牌竞拍方面的资讯，对当月竞拍分析发表独到见解</p>
+									</div>
+								</a>
+								<div class="havePic" style="display: inline-block;">
+									<img alt="" src="http://localhost:8080/WisdomCommunity/headicon/timg.jpg"
+										style="width: 40%;" />
+									<!-- <a href=""><div class="havePic_head"></div></a> -->
+								</div>
+								<div class="indexCon_msg_detail_other">
+									<ul>
+										<li>花开花落</li>
+										<li>1天前</li>
+										<li>21</li>
+										<li>28</li>
+									</ul>
+								</div>
+							</div>
+							<div class="clear"></div>
+						</div>
+
+					</div>
+					<div class="indexFooter">
+						<div class="indexFooter_con">
+							<a href="javascript:;"></a> <a id="pages" href="javascript:">></a>
+						</div>
+					</div>
+				</div>
+				<div class="indexMain_right">
+					<div class="indexMain_rightCon" style="display: inline-block;width: ">
+						<a href="write" class="newMsg" style="background-color: rgb(107,202,210);">发新帖</a>
+						<div class="indexSearch">
+							<input type="text" id="myInput"  placeholder="请输入关键词" style="width: 75%;"/> <input id="submit" type="submit" value="搜索"
+								style="background-color: rgb(107,202,210);width: 25%;" />
+						</div>
+						<div class="indexPublic">
+							<div class="indexPublic_head">本周热议</div>
+							<div class="indexPublic_con">
+								<ul class="weekHot">
+									<li><a href="">关注上海车牌竞拍方面的资讯</a><span>29</span></li>
+									<li><a href="">关注上海车牌竞拍方面的资讯</a><span>29</span></li>
+									<li><a href="">关注上海车牌竞拍方面的资讯</a><span>29</span></li>
+									<li><a href="">关注上海车牌竞拍方面的资讯</a><span>29</span></li>
+									<li><a href="">关注上海车牌竞拍方面的资讯</a><span>29</span></li>
+									<li><a href="">关注上海车牌竞拍方面的资讯</a><span>29</span></li>
+								</ul>
+							</div>
+						</div>
+						<div class="indexPublic"></div>
+					</div>
+				</div>
+				<div class="clear"></div>
+			</div>
+			<footer class="publicFooter"> </footer>
+
+		</div>
+	</div>
+	<!-- //projects -->
+
+	<!-- footer start here -->
+	<div class="footer-agile jarallax">
+		<div class="container">
+
+			<div class="footer-btm-agileinfo">
+				<div class="col-md-3 col-xs-3 footer-grid">
+					<h3>Useful Info</h3>
+					<ul>
+						<li><a href="#"><i class="glyphicon glyphicon-menu-right"></i>Hendrerit quam</a></li>
+						<li><a href="#"><i class="glyphicon glyphicon-menu-right"></i>Amet consectetur </a></li>
+						<li><a href="#"><i class="glyphicon glyphicon-menu-right"></i>Iquam hendrerit</a></li>
+						<li><a href="#"><i class="glyphicon glyphicon-menu-right"></i>Donec ut lectus </a></li>
+					</ul>
+				</div>
+				<div class="col-md-3 col-xs-3 footer-grid w3social">
+					<h3>Navigation</h3>
+					<ul>
+						<li><a href="indexPage">主页</a></li>
+						<li><a href="servicesPage">社区拼车</a></li>
+						<li><a href="projectsPage">社区闲购</a></li>
+						<li><a href="contactPage">联系我们</a></li>
+					</ul>
+				</div>
+				<div class="col-md-6 col-xs-6 footer-grid footer-review">
+					<h3>Newsletter</h3>
+					<form action="#" method="post">
+						<input type="email" name="Email" placeholder="Your Email" required="">
+						<input type="submit" value="Subscribe">
+						<div class="clearfix"> </div>
+					</form>
+					<div class="copy-w3lsright">
+						<p>Copyright &copy; 2018.Company name All rights reserved.More Templates <a
+								href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a> - Collect from <a
+								href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a></p>
+					</div>
+				</div>
+				<div class="clearfix"> </div>
+			</div>
+			<div class="footer-top-agileinfo">
+				<div class="social-wthree-icons bnragile-icons">
+					<ul>
+						<li><a href="#" class="fa fa-facebook icon icon-border facebook"> </a></li>
+						<li><a href="#" class="fa fa-twitter icon icon-border twitter"> </a></li>
+						<li><a href="#" class="fa fa-google-plus icon icon-border googleplus"> </a></li>
+						<li><a href="#" class="fa fa-dribbble icon icon-border dribbble"> </a></li>
+					</ul>
+					<div class="clearfix"> </div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- //footer end here -->
+	<!-- start-smooth-scrolling -->
+	<script type="text/javascript" src="js/move-top.js"></script>
+	<script type="text/javascript" src="js/easing.js"></script>
+	<script type="text/javascript">
+		jQuery(document).ready(function ($) {
+			$(".scroll").click(function (event) {
+				event.preventDefault();
+				$('html,body').animate({ scrollTop: $(this.hash).offset().top }, 1000);
+			});
+		});
+	</script>
+	<!-- //start-smoth-scrolling -->
+	<!-- here stars scrolling icon -->
+	<script type="text/javascript">
+		$(document).ready(function () {
+			/*
+				var defaults = {
+				containerID: 'toTop', // fading element id
+				containerHoverID: 'toTopHover', // fading element hover id
+				scrollSpeed: 1200,
+				easingType: 'linear' 
+				};
+			*/
+
+			$().UItoTop({ easingType: 'easeOutQuart' });
+
+		});
+	</script>
+	<!-- pop-up-plugin -->
+	<script src="js/jquery.colorbox.js"></script>
+	<script>
+		$(document).ready(function () {
+			//Examples of how to assign the Colorbox event to elements
+			$(".group1").colorbox({ rel: 'group1' });
+			$(".callbacks").colorbox({
+				onOpen: function () { alert('onOpen: colorbox is about to open'); },
+				onLoad: function () { alert('onLoad: colorbox has started to load the targeted content'); },
+				onComplete: function () { alert('onComplete: colorbox has displayed the loaded content'); },
+				onCleanup: function () { alert('onCleanup: colorbox has begun the close process'); },
+				onClosed: function () { alert('onClosed: colorbox has completely closed'); }
+			});
+
+			//Example of preserving a JavaScript event for inline calls.
+			$("#click").click(function () {
+				$('#click').css({ "background-color": "#f00", "color": "#fff", "cursor": "inherit" }).text("Open this window again and this message will still be here.");
+				return false;
+			});
+		});
+	</script>
+	<!-- //pop-up-plugin -->
+	<!-- filter-plugin -->
+	<script src="js/jquery.filterizr.js"></script>
+	<script src="js/controls.js"></script>
+	<script type="text/javascript">
+		$(function () {
+			//Initialize filterizr with default options
+			$('.filtr-container').filterizr();
+		});
+	</script>
+	<script src="js/jquery-1.11.1.min.js"></script>
+	<script>
+	var dataAll='';
+	$("#submit").click(function(){
+		var val=$("#myInput").val()+"";
+	    var data=dataAll.data;
+	    var k=0;
+	    for(var i=0;i<data.length;i++){
+	    	if (StrExist(data[i].owner_name+"",val)||
+	    			data[i].forum_id==val||
+	    			    StrExist(data[i].content+"",val)||
+	    			        StrExist(data[i].theme+"",val)) {
+				k++;if(k>5)break;
+				if(k==1){
+					$(".indexMain_left>div").not(":eq("+($('.indexMain_left>div').length-1)+")").remove();
+					$('.indexFooter').before("<div class='indexMain_left_con'><div class='indexCon_msg'><div class='indexCon_msg_pic'><img src='"+data[i].owner_headicon+"'/></div><div class='indexCon_msg_detail'><a href='forum/searchInvitation?forum_id="+data[i].forum_id+"'><div class='indexCon_msg_detail_tittle'><span>闲购</span><p>"+data[i].theme+"</p></div></a><div class='havePic' style='display: inline-block;'><img alt='' src='"+data[i].img+"' style='width: 0%;'/></div><div class='indexCon_msg_detail_other'><ul><li>"+data[i].owner_name+"</li><li>"+data[i].forum_date+"</li><li>21</li><li>28</li></ul></div></div><div class='clear'></div></div></div>")
+				}else{
+				$('.indexFooter').before("<div class='indexMain_left_con'><div class='indexCon_msg'><div class='indexCon_msg_pic'><img src='"+data[i].owner_headicon+"'/></div><div class='indexCon_msg_detail'><a href='forum/searchInvitation?forum_id="+data[i].forum_id+"'><div class='indexCon_msg_detail_tittle'><span>闲购</span><p>"+data[i].theme+"</p></div></a><div class='havePic' style='display: inline-block;'><img alt='' src='"+data[i].img+"' style='width: 0%;'/></div><div class='indexCon_msg_detail_other'><ul><li>"+data[i].owner_name+"</li><li>"+data[i].forum_date+"</li><li>21</li><li>28</li></ul></div></div><div class='clear'></div></div></div>")
+				}
+			}
+	    }
+	})
+	 
+	function StrExist(param1,param2){
+		var bb=false;
+		var res=param2.length-1;
+		for(var i=0;i<param1.length;i++){
+			if(param1.charAt(i)==param2.charAt(0)){
+				for(var k=1;k<param2.length;k++){
+					if(param1.charAt(i+k)==param2.charAt(k)){
+						bb=true;
+						if(k==res)return bb;
+					}else{
+						bb=false;
+						break;
+					}
+				}
+			}
+		}
+		return bb;
+	}
+	
+	$("#myInput").click(function(){
+		$.ajax({
+		type : "POST",
+		url : 'forum/searchAllCount',
+		dataType : 'json',
+		success : function(data) {
+			dataAll=data;
+			console.log(dataAll)
+		}
+	})
+	})
+	$.ajax({
+		type : "POST",
+		url : 'forum/searchcount',
+		dataType : 'json',
+		success : function(data) {
+			console.log(data.count/5);
+			for(var k=1;k<=Math.ceil(data.count/5);k++){
+			$("#pages").before("<a href='javascript:;'>"+k+"</a>")
+			}
+			for(var i=0;i<data.data.length;i++){
+				$('.indexFooter').before("<div class='indexMain_left_con'><div class='indexCon_msg'><div class='indexCon_msg_pic'><img src='"+data.data[i].owner_headicon+"'/></div><div class='indexCon_msg_detail'><a href='forum/searchInvitation?forum_id="+data.data[i].forum_id+"'><div class='indexCon_msg_detail_tittle'><span>闲购</span><p>"+data.data[i].theme+"</p></div></a><div class='havePic' style='display: inline-block;'><img alt='' src='"+data.data[i].img+"' style='width: 40%;'/></div><div class='indexCon_msg_detail_other'><ul><li>"+data.data[i].owner_name+"</li><li>"+data.data[i].forum_date+"</li><li>21</li><li>28</li></ul></div></div><div class='clear'></div></div></div>")
+			}
+		}
+	})
+	
+	$('.indexFooter_con').on('click', 'a', function() {
+		console.log(111);
+		var page = $(this).text();
+		console.log(page)
+		$.ajax({
+			type:'POST',
+			url:'forum/search',
+			data:'page='+page,
+			dataType:'json',
+			success:function(data){
+				console.log(data)
+				$(".indexMain_left>div").not(":eq("+($('.indexMain_left>div').length-1)+")").remove();
+				for(var i=0;i<data.data.length;i++){
+					$('.indexFooter').before("<div class='indexMain_left_con'><div class='indexCon_msg'><div class='indexCon_msg_pic'><img src='"+data.data[i].owner_headicon+"'/></div><div class='indexCon_msg_detail'><a href='forum/searchInvitation?forum_id="+data.data[i].forum_id+"'><div class='indexCon_msg_detail_tittle'><span>闲购</span><p>"+data.data[i].theme+"</p></div></a><div class='havePic' style='display: inline-block;'><img alt='' src='"+data.data[i].img+"' style='width: 0%;'/></div><div class='indexCon_msg_detail_other'><ul><li>"+data.data[i].owner_name+"</li><li>"+data.data[i].forum_date+"</li><li>21</li><li>28</li></ul></div></div><div class='clear'></div></div></div>")
+				}
+			}
+		})
+	})
+	$(".indexMain_left_btn li a").click(function() {
+		$(".indexMain_left_btn li a").removeClass("on");
+		$(this).addClass("on");
+	});
+	window.onscroll = function() {
+		var scrolls = document.body.scrollTop
+				|| document.documentElement.scrollTop;
+		var slided = 60;
+		if (scrolls >= slided) {
+			$(".appear").hide();
+			$(".navFix").show();
+			$(".ltHead").addClass("navTop");
+		} else {
+			$(".appear").show();
+			$(".navFix").hide();
+			$(".ltHead").removeClass("navTop");
+		}
+	};
+	</script>
+	<!-- //filter-plugin -->
+
+</body>
+
+</html>

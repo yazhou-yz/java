@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    <mapper namespace="com.wisdom.dao.ForumDAO">
+    <resultMap type="com.wisdom.model.Invitation" id="searchInvitation">
+    <id property="forumId" column="iforumId"/>
+    <result property="ownerId" column="iownerId"/>
+    <result property="theme" column="itheme"/>
+    <result property="content" column="icontent"/>
+    <result property="img" column="iimg"/>
+    <result property="forumDate" column="iforumDate"/>
+    <result property="ownerName" column="iownerName"/>
+    <result property="ownerHeadicon" column="iownerHeadicon"/>
+    <collection property="comments" ofType="com.wisdom.model.Comment">
+    <id property="commentId" column="commentId"/>
+    <result property="content" column="ccontent"/>
+    <result property="ownerId" column="cownerId"/>
+    <result property="commentDate" column="commentdate"/>
+    <result property="invitationId" column="invitation"/>
+    <result property="ownerName" column="cownerName"/>
+    <result property="ownerHeadicon" column="cownerHeadicon"/>
+    </collection>
+    </resultMap>
+    <select id="searchInvitation" resultMap="searchInvitation">
+    select i.forum_id as 'iforumId',
+           i.owner_id as 'iownerId',
+           oa.owner_name as 'iownerName',
+           oa.owner_headicon as 'iownerHeadicon',
+           i.theme as 'itheme',
+           i.content as 'icontent',
+           i.img as 'iimg',
+           i.forum_date as 'iforumDate',
+           c.comment_id as 'commentId',
+           c.content as 'ccontent',
+           c.owner_id as 'cownerId',
+           ob.owner_name as 'cownerName',
+           ob.owner_headicon as 'cownerHeadicon',
+           c.comment_date as 'commentdate',
+           c.invitation_id as 'invitation' 
+           from invitation i left join comment c 
+           on i.forum_id=c.invitation_id 
+           left join owner oa on i.owner_id=oa.owner_id 
+           left join owner ob on c.owner_id=ob.owner_id
+           where i.forum_id=#{param1}
+    </select>
+    <insert id="AddForum">
+    insert into invitation(owner_id,theme,content,img,forum_date) values('${param1}','${param2}','${param3}','${param4}','${param5}')
+    </insert>
+    <select id="searchforum" resultType="map">
+    select i.*,o.owner_name,o.owner_headicon from invitation i left join owner o on i.owner_id=o.owner_id limit #{param1},5
+    </select>
+    <select id="getCount" resultType="int">
+    select count(*) from invitation
+    </select>
+    <insert id="addcomMent">
+    insert into comment(content,owner_id,invitation_id,comment_date) values(#{param1},
+    #{param2},#{param3},#{param4})
+    </insert>
+    <select id="searchAllCount" resultType="map">
+    select i.*,o.owner_name,o.owner_headicon from invitation i left join owner o on i.owner_id=o.owner_id
+    </select>
+    </mapper>

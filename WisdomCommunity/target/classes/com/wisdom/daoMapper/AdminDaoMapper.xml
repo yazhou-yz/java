@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wisdom.dao.AdminDao">
+	<insert id="register">
+		insert into admin (admin_name,admin_password,admin_headicon) values (#{arg0},#{arg1},#{arg2})
+	</insert>
+	<select id="login" resultType="Admin">
+		select * from admin where admin_name=#{arg0} and admin_password=#{arg1}
+	</select>
+	
+	<select id="selectByMap" resultType="Admin" parameterType="map">
+		select * from admin where admin_name=#{admin_name}
+	</select>
+	<update id="update">
+		update admin set admin_name=#{adminName},admin_password=#{adminPassword} where admin_id=#{adminId}
+	</update>
+	<delete id="delete">
+		delete from admin where admin_id=#{id}
+	</delete>
+</mapper>   

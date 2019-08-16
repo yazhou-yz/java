@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+		<title>缴费</title>
+		<meta name="keywords" content="">
+		<meta name="description" content="">
+
+		<link rel="shortcut icon" href="favicon.ico">
+		<link href="back_css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+		<link href="back_css/font-awesome.css?v=4.4.0" rel="stylesheet">
+
+		<!-- Data Tables -->
+		<link href="back_css/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet">
+
+		<link href="back_css/animate.css" rel="stylesheet">
+		<link href="back_css/style.css?v=4.1.0" rel="stylesheet">
+		<link rel="stylesheet" href="layui/css/layui.css" media="all">
+		<style type="text/css">
+			.layui-table-view {
+				margin: 0px;
+			}
+
+			.layui-table-view {
+				border-radius: 4px;
+			}
+
+			.layui-table-tool {
+				border-radius: 3px;
+			}
+
+			.ibox-content {
+				padding: 0px;
+				border: none;
+				border-radius: 4px;
+			}
+
+			.ibox {
+				border: none;
+			}
+
+			.layui-btn {
+				background-color: #23b7e5
+			}
+
+			.layui-laypage .layui-laypage-curr .layui-laypage-em {
+				background-color: #23b7e5
+			}
+
+			.layui-form-checked[lay-skin=primary] i {
+				border-color: #23b7e5 !important;
+				background-color: #23b7e5;
+			}
+
+			.layui-form-label {
+				width: 87px;
+			}
+
+			#hid_btn,
+			#oin_btn {
+				margin-top: 5px;
+			}
+		</style>
+	</head>
+
+	<body class="gray-bg">
+		<div class="wrapper wrapper-content animated fadeInRight">
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="ibox float-e-margins">
+						<div class="ibox-content">
+							<div class="layui-form">
+								<div class="layui-form-item" style="padding: 10px 0;margin: auto;">
+									<label class="layui-form-label">缴费状态</label>
+									<div class="layui-input-inline">
+										<input type="text" id="costStatus" lay-verify="title" autocomplete="off" placeholder="请输入缴费状态" class="layui-input">
+									</div>
+									<div class="layui-input-inline">
+										<button class="layui-btn layui-btn-sm" id="costStatus_btn"><i class="layui-icon layui-icon-search"></i></button>
+									</div>
+									<label class="layui-form-label">门牌号</label>
+									<div class="layui-input-inline">
+										<input type="text" id="hid" lay-verify="title" autocomplete="off" placeholder="请输入门牌号" class="layui-input">
+									</div>
+									<div class="layui-input-inline">
+										<button class="layui-btn layui-btn-sm" id="hid_btn"><i class="layui-icon layui-icon-search"></i></button>
+									</div>
+									<label class="layui-form-label">业主编号</label>
+									<div class="layui-input-inline">
+										<input type="text" id="oid" lay-verify="title" autocomplete="off" placeholder="请输入业主编号" class="layui-input">
+									</div>
+									<div class="layui-input-inline">
+										<button class="layui-btn layui-btn-sm" id="oid_btn"><i class="layui-icon layui-icon-search"></i></button>
+									</div>
+
+								</div>
+
+							</div>
+							<table class="layui-hide" id="test" lay-filter="cost" style="border: none;"></table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- 全局js -->
+		<script src="back_js/jquery.min.js?v=2.1.4"></script>
+		<script src="back_js/bootstrap.min.js?v=3.3.6"></script>
+		<script type="text/html" id="toolbarHead">
+			<div class="layui-btn-container">
+                <div class="layui-btn-container">
+                        <button class="layui-btn layui-btn-sm" lay-event="add">信息添加</button>
+                        <button class="layui-btn layui-btn-sm" lay-event="refresh"><i
+                            class="layui-icon">&#xe669;</i></button>
+                        <!-- <button class="layui-btn layui-btn-sm" lay-event="del">删除</button> -->
+                        <!-- <button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button> -->
+                </div>
+			</div>
+        </script>
+
+		<script src="layui/layui.js" charset="utf-8"></script>
+		<script src="back_js/jquery-3.4.1.js"></script>
+		<script>
+			layui.use(['table'], function() {
+				var table = layui.table;
+				var layer = layui.layer;
+
+				let table_static = table.render({
+					elem: '#test',
+					url: 'cost/search',
+					toolbar: '#toolbarHead',
+					title: '用户数据表',
+					cols: [
+						[{
+								type: 'checkbox',fixed: 'left'},
+							{
+								field: 'cost_id',title: '编号',sort: true,align:'center'
+							},
+							{
+								field: 'cost_property',
+								title: '金额',
+								edit: 'text',
+								align:'center',
+								sort: true
+							},
+							{
+								field: 'cost_status',
+								title: '缴费状态',
+								edit: 'text',
+								align:'center',
+								sort: true
+							},
+							{
+								field: 'cost_oid',
+								title: '业主编号',
+								align:'center',
+								sort: true
+							},
+							{
+								field: 'cost_hid',
+								title: '门牌号',
+								align:'center',
+								sort: true
+							},
+							{
+								field: 'cost_time',
+								title: '缴费时间',
+								align:'center',
+								sort: true
+							}
+						]
+					],
+					page: true
+				});
+
+				$("#costStatus_btn").click(function() {
+					let costStatus = $("#costStatus").val();
+					if (costStatus == null || costStatus == undefined || costStatus.trim() == "") {
+						layer.msg("请输入正确缴费状态");
+						return;
+					} else {
+						if (costStatus == "已缴" || costStatus == "待缴") {
+							$.ajax({
+								type: "POST",
+								url: "cost/searchCostStatus",
+								dataType: "json",
+								data: "costStatus=" + costStatus,
+								success: function(data) {
+									console.log(data);
+									layer.msg(data.msg, {
+										time: 500
+									}, function() {
+										if (data.code == 0) {
+											table_static.reload({
+												url: "cost/searchCostStatus",
+												where: {
+													costStatus: costStatus
+												},
+												page: {
+													curr: 1
+												}
+											});
+										}
+									});
+								}
+							})
+						}else{
+							layer.msg("请输入正确缴费状态");
+						}
+					}
+				});
+				$("#hid_btn").click(function() {
+					let hid = $("#hid").val();
+					if (hid == null || hid == undefined || hid.trim() == "") {
+						layer.msg("请输入正确门牌号");
+						return;
+					}
+					$.ajax({
+						type: "POST",
+						url: "cost/searchByHouseId",
+						dataType: "json",
+						data: "costHid=" + hid,
+						success: function(data) {
+							console.log(data);
+							layer.msg(data.msg, {
+								time: 500
+							}, function() {
+								if (data.code == 0) {
+									table_static.reload({
+										url: "cost/searchByHouseId",
+										where: {
+											costHid: hid
+										},
+										page: {
+											curr: 1
+										}
+									});
+								}
+							});
+						}
+					})
+				});
+				$("#oid_btn").click(function() {
+					let oid = $("#oid").val();
+					var myreg=/^[1][3,4,5,7,8][0-9]{9}$/;
+					if (oid == null || oid == undefined || oid.trim() == ""||!myreg.test(oid)) {
+					    layer.msg("请输入正确的手机号");
+					    return;
+					}
+					$.ajax({
+						type: "POST",
+						url: "cost/searchByOwnerId",
+						dataType: "json",
+						data: "costOid=" + oid,
+						success: function(data) {
+							layer.msg(data.msg, {
+								time: 500
+							}, function() {
+								if (data.code == 0) {
+									table_static.reload({
+										url: "cost/searchByOwnerId",
+										where: {
+											costOid: oid
+										},
+										page: {
+											curr: 1
+										}
+									});
+								}
+							});
+						}
+					})
+				});
+
+				// 单元格编辑
+				table.on('edit(cost)', function(obj) {
+					var data = obj.data;
+					var field = obj.field;
+					if (obj.field == "cost_status") {
+						var myreg1="已缴";
+						var myreg2="待缴";
+						if ((myreg1!=obj.value)&&(myreg2!=obj.value)) {
+							layer.msg("请选择输入已缴或者待缴", {
+								time: 500
+							}, function() {
+								table_static.reload({
+									url: "cost/search"
+								})
+							})
+							return;
+						}
+					}
+					if (obj.field == "cost_property") {
+						
+						if (!(/^([1-9]\d*(\.\d*[1-9][0-9])?)|(0\.\d*[1-9][0-9])|(0\.\d*[1-9])$/.test(obj.value))) {
+							layer.msg("金额格式不符合", {
+								time: 500
+							}, function() {
+								table_static.reload({
+									url: "cost/search"
+								})
+							})
+							return;
+						}
+					}
+					$.ajax({
+						type: "POST",
+						url: "cost/edit",
+						data: {
+							field: obj.field,
+							value: obj.value,
+							costHid: obj.data.cost_hid
+						},
+						dataType: "json",
+						success: function(data) {
+							layer.msg(data.msg, {
+								time: 500
+							}, function() {
+								if (data.code == 0) {
+									table_static.reload({
+										url: "cost/search",
+										where: {
+											costHid: obj.data.cost_hid
+										},
+										page: {
+											curr: 1
+										}
+									});
+								}
+							});
+						}
+					});
+				});
+
+
+				//头工具栏事件
+				table.on('toolbar(cost)', function(obj) {
+					var checkStatus = table.checkStatus(obj.config.id);
+					switch (obj.event) {
+						case 'add':
+							layer.open({
+								type: 2,
+								area: ["600px", "480px"],
+								content: ["addcost"],
+								btn: ["确定", "取消"],
+								yes: function(index, layero) {
+									let body = layer.getChildFrame("body", index);
+									let cStatus = body.find('#cStatus').val();
+									let oid = body.find('#oid').val();
+									let hid = body.find('#hid').val();
+									let property = body.find('#property').val();
+									console.log(cStatus);
+									console.log(oid);
+									console.log(hid);
+									console.log(property);
+									if (cStatus == null || cStatus == undefined || cStatus.trim() == "" ) {
+										layer.msg("请输入缴费状");
+									} else if (oid == null || oid == undefined || oid.trim() == "") {
+										layer.msg("请输入业主编号");
+									} else if (hid == null || hid == undefined || hid.trim() == "") {
+										layer.msg("请输入门牌号");
+									}else if (property == null || property == undefined || property.trim() == "") {
+										layer.msg("请输入缴费金额");
+									}else {
+										$.ajax({
+											type: "POST",
+											url: "cost/add",
+											dataType: "json",
+											data: "costStatus=" + cStatus + "&costOid=" + oid+ "&costHid=" + hid+ "&costProperty=" + property,
+											success: function(data) {
+												layer.msg(data.msg, {
+													time: 500
+												}, function() {
+													if (data.code == 0) {
+														layer.close(index);
+														table_static.reload({
+															url: "cost/search"
+														});
+													}
+												});
+											}
+										});
+									}
+								}
+							});
+							break;
+						case 'refresh':
+							table_static.reload({
+								url: "cost/search"
+							});
+							break;
+					};
+				});
+			});
+			
+			
+		</script>
+
+
+
+		<script src="back_js/plugins/jeditable/jquery.jeditable.js"></script>
+
+		<!-- Data Tables -->
+		<script src="back_js/plugins/dataTables/jquery.dataTables.js"></script>
+		<script src="back_js/plugins/dataTables/dataTables.bootstrap.js"></script>
+
+		<!-- 自定义js -->
+		<script src="back_js/content.js?v=1.0.0"></script>
+
+
+	</body>
+
+</html>

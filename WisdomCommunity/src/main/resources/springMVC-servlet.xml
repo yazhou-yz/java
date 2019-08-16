@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.1.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.1.xsd">
+	
+	<context:component-scan base-package="com.wisdom.controller" use-default-filters="false">
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+	</context:component-scan>
+	<mvc:annotation-driven></mvc:annotation-driven>
+	<mvc:default-servlet-handler/>
+	<!-- <mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/*"/>
+			<bean id="loginInterceptor" class="com.wisdom.commons.LoginInterceptor"></bean>
+		</mvc:interceptor>
+	</mvc:interceptors> -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"></bean>
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/html/"></property>
+		<property name="suffix" value=".html"></property>
+	</bean>
+	<mvc:view-controller path="indexPage" view-name="index"/>
+	<mvc:view-controller path="contactPage" view-name="contact"/>
+	<mvc:view-controller path="iconsPage" view-name="icons"/>
+	<mvc:view-controller path="projectsPage" view-name="projects"/>
+	<mvc:view-controller path="servicesPage" view-name="services"/>
+	<mvc:view-controller path="typographyPage" view-name="typography"/>
+	<mvc:view-controller path="loginPage" view-name="login"/>
+	<mvc:view-controller path="ownerEdit" view-name="ownerEdit"/>
+	<mvc:view-controller path="add_release" view-name="add_release"/>
+	<mvc:view-controller path="owenrRepairs" view-name="addWaterRepairs"/>
+    <mvc:view-controller path="write" view-name="write"/>
+    <mvc:view-controller path="tiezi" view-name="tiezi"/>
+	
+<!-- 	后台界面 -->
+	<mvc:view-controller path="index" view-name="back_index"/>
+	<mvc:view-controller path="house" view-name="house"/>
+	<mvc:view-controller path="calendar" view-name="calendar"/>
+	<mvc:view-controller path="addhouse" view-name="addHouse"/>
+	<mvc:view-controller path="back_inform" view-name="back_inform"/>
+	<mvc:view-controller path="add_Inform" view-name="add_Inform"/>
+	<mvc:view-controller path="staff" view-name="staff"/>
+ 	<mvc:view-controller path="addstaff" view-name="addStaff"/>
+ 	<mvc:view-controller path="back_repairs" view-name="back_repairs"/>
+ 	<mvc:view-controller path="cost" view-name="cost"/>
+ 	<mvc:view-controller path="addcost" view-name="addcost"/>
+ 	<mvc:view-controller path="owner" view-name="owner"/>
+</beans>

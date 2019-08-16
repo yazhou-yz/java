@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>物业维修</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="back_css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="back_css/font-awesome.css?v=4.4.0" rel="stylesheet">
+
+    <!-- Data Tables -->
+    <link href="back_css/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet">
+
+    <link href="back_css/animate.css" rel="stylesheet">
+    <link href="back_css/style.css?v=4.1.0" rel="stylesheet">
+    <link rel="stylesheet" href="layui/css/layui.css" media="all">
+    <style type="text/css">
+        .layui-table-view {
+            margin: 0px;
+        }
+
+        .layui-table-view {
+            border-radius: 4px;
+        }
+
+        .layui-table-tool {
+            border-radius: 3px;
+        }
+
+        .ibox-content {
+            padding: 0px;
+            border: none;
+            border-radius: 4px;
+        }
+
+        .ibox {
+            border: none;
+        }
+
+        .layui-btn {
+            background-color: #23b7e5
+        }
+
+        .layui-laypage .layui-laypage-curr .layui-laypage-em {
+            background-color: #23b7e5
+        }
+
+        .layui-form-checked[lay-skin=primary] i {
+            border-color: #23b7e5 !important;
+            background-color: #23b7e5;
+        }
+        #hid_btn,
+        #oin_btn {
+            margin-top: 5px;
+        }
+		.test{
+			display: inline-block;
+			margin-right: 5px;
+		}
+		.layui-form-select dl dd.layui-this{
+			    background-color:#23b7e5;
+		}
+    </style>
+</head>
+<body class="gray-bg" style="background-image: url('images/riski-andriansyah-Gl6GljPtJpo-unsplash.jpg');">
+    <div class="wrapper wrapper-content animated fadeInRight" >
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                        <div class="layui-form">
+                            <div class="layui-form-item" style="padding: 10px 0;margin: auto;">
+                                <label class="layui-form-label">业主</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" id="oid" lay-verify="title" autocomplete="off"
+                                        placeholder="请输入业主手机号" class="layui-input">
+                                </div>
+                                <div class="layui-input-inline">
+                                    <button class="layui-btn layui-btn-sm" id="oid_btn"><i
+                                            class="layui-icon layui-icon-search"></i></button>
+                                </div>
+                                <!-- <label class="layui-form-label">报修状态</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" id="ooin" lay-verify="title" autocomplete="off"
+                                        placeholder="请输入业主名" class="layui-input">
+                                </div> -->
+								<div class="layui-form-item test">
+                                <label class="layui-form-label">报修</label>
+                                   <div class="layui-input-inline">
+                                     <select name="type" id="type" lay-verify="required">
+                                       <option value=""></option>
+                                       <option value="水工">水工</option>
+                                       <option value="电工">电工</option>
+                                       <option value="瓦工">瓦工</option>
+                                       <option value="锁工">锁工</option>
+                                       <option value="其它">其它</option>
+                                     </select>
+                                   </div>
+								   <div class="layui-input-inline">
+								       <button class="layui-btn layui-btn-sm" id="type_btn"><i
+								               class="layui-icon layui-icon-search"></i></button>
+								   </div> 
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <table class="layui-hide" id="test" lay-filter="repairs" style="border: none;"></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 全局js -->
+    <script src="back_js/jquery.min.js?v=2.1.4"></script>
+    <script src="back_js/bootstrap.min.js?v=3.3.6"></script>
+    <script type="text/html" id="toolbarHead">
+        <div class="layui-btn-container">
+                <div class="layui-btn-container">
+                        <!-- <button class="layui-btn layui-btn-sm" lay-event="add">房屋添加</button> -->
+                        <button class="layui-btn layui-btn-sm" lay-event="refresh"><i
+                            class="layui-icon">&#xe669;</i></button>
+                </div>
+        </div>
+      </script>
+
+    <script src="layui/layui.js" charset="utf-8"></script>
+    <script src="back_js/jquery-3.4.1.js"></script>
+    <script>
+        layui.use(['table'], function () {
+            var table = layui.table;
+            var layer = layui.layer;
+
+            let table_static = table.render({
+                elem: '#test'
+                , url: 'repairs/search'
+                , toolbar: '#toolbarHead'
+                , title: '用户数据表'
+                , cols: [[
+                    { type: 'checkbox', fixed: 'left' },
+                    { field: 'repairs_id', title: '维修单号',sort: true },
+                    { field: 'repairs_type', title: '报修类型', sort: true },
+                    { field: 'repairs_state', title: '报修状态', edit: 'text', sort: true },
+					{ field: 'repairs_need', title: '问题描述', sort: true },
+					{ field: 'repairs_time', title: '报修时间',  sort: true },
+					{ field: 'repairs_oid', title: '报修业主电话', sort: true }
+                ]]
+                , page: true
+
+            });
+
+            $("#oid_btn").click(function () {
+                let oid = $("#oid").val();
+				console.log(oid);
+				var myreg=/^[1][3,4,5,7,8][0-9]{9}$/;
+                if (oid == null || oid == undefined || oid.trim() == ""||!myreg.test(oid)) {
+                    layer.msg("请输入正确的手机号");
+                    return;
+                }
+                $.ajax({
+                    type: "GET"
+                    , url: "repairs/searchRepairsForOid"
+                    , dataType: "json"
+                    , data: "repairsOid=" + oid
+                    , success: function (data) {
+                        layer.msg(data.msg, { time: 500 }, function () {
+                            if (data.code == 0) {
+                                table_static.reload({
+                                    url: "repairs/searchRepairsForOid"
+                                    , where: {
+                                        repairsOid: oid
+                                    }
+                                    , page: {
+                                        curr: 1
+                                    }
+                                });
+                            }
+                        });
+                    }
+                })
+            });
+            $("#type_btn").click(function () {
+                let type = $("#type").val();
+				console.log(type)
+                $.ajax({
+                    type: "GET"
+                    , url: "repairs/searchTypeForRepairs"
+                    , dataType: "json"
+                    , data: "repairsType=" + type
+                    , success: function (data) {
+                        layer.msg(data.msg, { time: 500 }, function () {
+                            if (data.code == 0) {
+                                table_static.reload({
+                                    url: "repairs/searchTypeForRepairs"
+                                    , where: {
+                                        repairsType: type
+                                    }
+                                    , page: {
+                                        curr: 1
+                                    }
+                                });
+                            }
+                        });
+                    }
+                })
+            });
+
+            // 单元格编辑
+            table.on('edit(repairs)', function (obj) {
+                if (obj.field == "repairs_state") {
+					var myreg1="报修";
+					var myreg2="已受理";
+					var myreg3="已维修";
+					var myreg4="与业主电话沟通中";
+                    if ((myreg1!=obj.value)&&(myreg2!=obj.value)&&(myreg3!=obj.value)&&(myreg4!=obj.value)){
+                        layer.msg("请选择输入<报修>或者<已受理>或者<已维修>或者<与业主电话沟通中>", { time: 1500 }, function () {
+                            table_static.reload({
+                                url: "repairs/search"
+                            })
+                        })
+                        return;
+                    }
+                }
+                $.ajax({
+                    type: "POST"
+                    , url: "repairs/editStaff"
+                    , data: {
+                        field: obj.field
+                        , value: obj.value
+                        , repairsId: obj.data.repairs_id
+                    }
+                    , dataType: "json"
+                    , success: function (data) {
+                        layer.msg(data.msg, { time: 500 }, function () {
+                            if (data.code == 0) {
+                                table_static.reload({
+                                    url: "repairs/search"
+                                    , where: {
+                                        repairsId: obj.data.repairs_id
+                                    }
+                                    , page: {
+                                        curr: 1
+                                    }
+                                });
+                            }
+                        });
+                    }
+                });
+            });
+
+            //头工具栏事件
+            table.on('toolbar(repairs)', function (obj) {
+                var checkStatus = table.checkStatus(obj.config.id);
+                switch (obj.event) {
+                    case 'add':
+                        layer.open({
+                            type: 2
+                            , area: ["600px", "480px"]
+                            , content: ["addhouse"]
+                            , btn: ["确定", "取消"]
+                            , yes: function (index, layero) {
+                                let body = layer.getChildFrame("body", index);
+                                let building = body.find("#building option:selected").val();
+                                let uniterm = body.find("#uniterm option:selected").val();
+                                let floor = body.find("#floor option:selected").val();
+                                let num = body.find("#num option:selected").val();
+                                if (building == null || building == undefined || building.trim() == "") {
+                                    layer.msg("请选择楼栋号");
+                                } else if (uniterm == null || uniterm == undefined || uniterm.trim() == "") {
+                                    layer.msg("请选择单元总数");
+                                } else if (floor == null || floor == undefined || floor.trim() == "") {
+                                    layer.msg("请选择楼层总数");
+                                } else if (num == null || num == undefined || num.trim() == "") {
+                                    layer.msg("请选择单层户数");
+                                } else {
+                                    $.ajax({
+                                        type: "POST"
+                                        , url: "house/batchAdd"
+                                        , dataType: "json"
+                                        , data: "building=" + building + "&uniterm=" + uniterm + "&floor=" + floor + "&num=" + num
+                                        , success: function (data) {
+                                            layer.msg(data.msg, { time: 500 }, function () {
+                                                if (data.code == 0) {
+                                                    layer.close(index);
+                                                    table_static.reload({
+                                                        url: "house/search"
+                                                    });
+                                                }
+                                            });
+                                        }
+                                    });
+                                }
+                            }
+                        });
+                        break;
+                    case 'refresh':
+                        table_static.reload({
+                            url: "repairs/search"
+                        });
+                        break;
+                };
+            });
+        });
+    </script>
+
+
+
+    <script src="back_js/plugins/jeditable/jquery.jeditable.js"></script>
+
+    <!-- Data Tables -->
+    <script src="back_js/plugins/dataTables/jquery.dataTables.js"></script>
+    <script src="back_js/plugins/dataTables/dataTables.bootstrap.js"></script>
+
+    <!-- 自定义js -->
+    <script src="back_js/content.js?v=1.0.0"></script>
+
+
+</body>
+
+</html>

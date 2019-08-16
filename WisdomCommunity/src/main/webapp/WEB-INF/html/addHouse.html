@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>add</title>
+    <link rel="stylesheet" href="layui/css/layui.css" media="all">
+    <style type="text/css">
+        .layui-btn {
+            background-color: #23b7e5
+        }
+        .layui-form-select dl dd.layui-this{
+            background-color: #23b7e5
+        }
+        
+    </style>
+</head >
+<div class="layui-form" style="background-image: url('images/叶子.jpg');height: 500px">
+    <div class="layui-form-item">
+    <br>
+    <br>
+        <label class="layui-form-label">楼栋</label>
+        <div class="layui-input-inline">
+            <select name="quiz1" id="building">
+                <option value="">请选择楼栋</option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">单元</label>
+        <div class="layui-input-inline">
+            <select name="quiz1" id="uniterm">
+                <option value="">请选择单元</option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">楼层</label>
+        <div class="layui-input-inline">
+            <select name="quiz1" id="floor">
+                <option value="">请选择楼层</option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">户数</label>
+        <div class="layui-input-inline">
+            <select name="quiz1" id="num">
+                <option value="">请选择户数</option>
+            </select>
+        </div>
+    </div>
+</div>
+</body>
+<script src="back_js/jquery-3.4.1.js"></script>
+<script src="layui/layui.js" charset="utf-8"></script>
+<script>
+    layui.use(['form'], function () {
+        let form = layui.form;
+        $(function () {
+            for (let i = 1; i <= 13; i++) {
+                let option = $("<option>").attr({
+                    value: i
+                }).text(i);
+                $("#building").append(option);
+            }
+            for (let n = 1; n < 6; n++) {
+                let option = $("<option>").attr({
+                    value: n
+                }).text(n);
+                $("#uniterm").append(option);
+            }
+            for (let k = 1; k <= 6; k++) {
+                let option = $("<option>").attr({
+                    value: k
+                }).text(k);
+                $("#num").append(option);
+            }
+            for (let m = 1; m < 8; m++) {
+                let option = $("<option>").attr({
+                    value: m
+                }).text(m);
+                $("#floor").append(option);
+            }
+            form.render();
+        })
+    });
+
+</script>
+
+</html>

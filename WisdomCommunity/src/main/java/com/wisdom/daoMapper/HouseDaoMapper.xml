@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- HouseDaoMapper --> 
+<mapper namespace="com.wisdom.dao.HouseDao">
+	<!-- 添加 -->
+	<insert id="add">
+	insert into house (house_id,house_area,house_owner) values (#{param1},#{param2},#{param3})
+	</insert>
+	<!-- 编辑 -->
+	<update id="edit">
+	update house set house_area = #{param2},house_owner =#{param3} where house_id = #{param1}
+	</update>
+	          <!-- 编辑面积 -->
+	<update id="editArea">
+	update house set house_area = #{param2} where house_id = #{param1}
+	</update>
+	         <!-- 编辑业主名 -->
+	<update id="editHouseOwner">
+	update house set house_owner =#{param2} where house_id = #{param1}
+	</update>
+	<!-- 查询 -->
+	<select id="search" resultType="map">
+	 select * from house 
+	</select>
+	<!-- 根据门牌号查询单条房屋业主信息 --> 
+	<select id="searchHouseIdForOwner" resultType="map">
+	select * from house where house_id = #{param1}
+	</select> 
+	<!-- 根据业主名查询房屋信息 -->
+	<select id="searchHouseOwnerForHouse" resultType="map">
+	  select house_id,house_area,house_owner from owner left join house on house.house_id = owner.owner_hid where house_owner = #{param1} 
+	</select>
+	      <!-- 查询全表总记录条数 -->
+	<select id="searchAllCount" resultType="int">
+	select count(*) from house
+	</select>   
+	             
+	<!-- 添加时id重复校验 -->
+	<select id="seachHouseId" resultType="int">
+	 select count(*) from house where house_id = #{param1}
+	</select>
+
+	<insert id="batchAdd">
+		insert into house (house_id,house_area) values 
+		<foreach collection="list" index="index" item="item" separator=",">
+			(#{item.houseId},#{item.houseArea})
+		</foreach>
+	</insert>
+	
+	<update id="houseEdit">
+		update house set ${arg0}=#{arg1} where house_id=#{arg2}
+	</update>
+	
+	<select id="getHouseIdByOwnerId" resultType="map">
+		select house_id from house where house_oid=#{arg0}
+	</select>
+</mapper>   

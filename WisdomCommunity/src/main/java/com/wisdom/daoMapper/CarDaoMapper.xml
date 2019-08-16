@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wisdom.dao.CarDao">
+	<!-- 增加 -->
+	<insert id="add">
+		insert into car (car_destination, car_plate, car_time, car_oid, car_seat,car_img)
+		values (#{param1},#{param2},#{param3},#{param4},#{param5},#{param6})
+	</insert>
+	<!-- 一重判断:根据用户id判断用户是否有车,如果有车获得车牌信息. -->
+	<select id="verify" resultType="map">
+		select car_plate from car_to_owner where owner_id = #{param1}
+	</select>
+	<!-- 查询: 查询所有发布信息(service层做时间过滤功能) -->
+	<select id="searchAll" resultType="map">
+		select * from car
+	</select>
+	<!-- 查询: 用户根据car_id查询单条拼车信息 -->
+	<select id="searchOneForCarId" resultType="map">
+		select * from car where car_id = #{param1}
+	</select>
+	
+	<select id="searchIconByOid" resultType="string">
+		select owner_headicon from owner where owner_id=#{arg0}
+	</select>
+	<!-- 编辑: 用户根据查到的car_id对单条拼车信息进行目的地、出发时间、座位数的编辑修改 -->
+	<update id="edit">
+		update car set car_destination = #{param1},car_time = #{param2},car_seat =
+		#{param3} where car_id = #{param4}
+	</update>
+	<!-- 删除(用户根据car_id条件对单条发布的拼车信息进行删除.) -->
+	<delete id="delete">
+		delete from car where car_id = #{param1}
+	</delete>
+</mapper>   

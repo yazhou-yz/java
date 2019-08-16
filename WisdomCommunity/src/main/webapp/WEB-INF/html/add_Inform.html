@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>add</title>
+    <link rel="stylesheet" href="layui/css/layui.css" media="all">
+    <style type="text/css">
+        .layui-btn {
+            background-color: #23b7e5
+        }
+        .layui-form-select dl dd.layui-this{
+            background-color: #23b7e5
+        }
+        
+    </style>
+</head >
+<body>
+<div class="layui-form" style="background-image: url('images/叶子.jpg');height: 500px">
+	<div class="layui-form-item" >
+		<br />
+         <label class="layui-form-label">标题</label> 
+         <div class="layui-input-block" style="width: 450px;">
+            <input type="text" name="headline" id="building" required  lay-verify="required" placeholder="请输入通知标题" autocomplete="off" class="layui-input">
+         </div>
+    </div>
+	<div class="layui-form-item layui-form-text" style="margin-top: 20px;">
+        <label class="layui-form-label">文本域</label> 
+        <div class="layui-input-block" style="width: 450px;">
+            <textarea rows="12" name="desc" id="desc" placeholder="请输入内容" class="layui-textarea"></textarea>
+        </div>
+    </div>
+</div>   
+</body>
+<script src="back_js/jquery-3.4.1.js"></script>
+<script src="layui/layui.js" charset="utf-8"></script>
+<script>
+    layui.use(['form'], function () {
+        let form = layui.form;
+    });
+
+</script>
+
+</html>

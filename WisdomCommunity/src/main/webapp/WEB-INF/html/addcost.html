@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>add</title>
+    <link rel="stylesheet" href="layui/css/layui.css" media="all">
+    <style type="text/css">
+        .layui-btn {
+            background-color: #23b7e5
+        }
+        .layui-form-select dl dd.layui-this{
+            background-color: #23b7e5
+        }
+        .layui-form-item{
+        	margin:30px 0 30px 0;
+        }
+        .layui-form-label layui-input{
+        	margin-top:30px;
+        }
+        
+    </style>
+</head >
+<div class="layui-form">
+    <div class="layui-form-item">
+    <br>
+    <br>
+    <div class="layui-form-item" >
+    <label class="layui-form-label" >缴费状态</label>
+    	<div class="layui-input-inline" style="width: 350px">
+      	<input id="cStatus" type="test" name="test" required lay-verify="required"
+      			 placeholder="请输入缴费状态" autocomplete="off" class="layui-input">
+    	</div>
+    </div>
+    <div class="layui-form-item" >
+    <label class="layui-form-label" >业主编号</label>
+    	<div class="layui-input-inline" style="width: 350px">
+      	<input id="oid" type="test" name="test" required lay-verify="required"
+      			 placeholder="请输入员工编号" autocomplete="off" class="layui-input">
+    	</div>
+    </div>
+    <div class="layui-form-item" >
+    <label class="layui-form-label" >门牌号</label>
+    	<div class="layui-input-inline" style="width: 350px">
+      	<input id="hid" type="test" name="test" required lay-verify="required"
+      			 placeholder="请输入门牌号" autocomplete="off" class="layui-input">
+    	</div>
+    </div>
+    <div class="layui-form-item" >
+    <label class="layui-form-label" >缴费金额</label>
+    	<div class="layui-input-inline" style="width: 350px">
+      	<input id="property" type="test" name="test" required lay-verify="required"
+      			placeholder="请输入缴费金额" autocomplete="off" class="layui-input">
+    	</div>
+    </div>
+</div>
+</body>
+<script src="back_js/jquery-3.4.1.js"></script>
+<script src="layui/layui.js" charset="utf-8"></script>
+<script>
+    layui.use(['form'], function () {
+        let form = layui.form;
+        $(function () {
+            /* for (let i = 1; i <= 13; i++) {
+                let option = $("<option>").attr({
+                    value: i
+                }).text(i);
+                $("#building").append(option);
+            }
+            for (let n = 1; n < 6; n++) {
+                let option = $("<option>").attr({
+                    value: n
+                }).text(n);
+                $("#uniterm").append(option);
+            }
+            for (let k = 1; k <= 6; k++) {
+                let option = $("<option>").attr({
+                    value: k
+                }).text(k);
+                $("#num").append(option);
+            }
+            for (let m = 1; m < 8; m++) {
+                let option = $("<option>").attr({
+                    value: m
+                }).text(m);
+                $("#floor").append(option);
+            } */
+            form.render();
+        })
+    });
+
+</script>
+
+</html>

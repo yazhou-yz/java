@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>Lowin</title>
+	<link rel="stylesheet" href="css/auth.css">
+	<link rel="stylesheet" href="layui/css/layui.css" media="all">
+	<style>
+		.layui-btn {
+			background-color: #44a0b3
+		}
+	</style>
+</head>
+
+<body>
+	<div class="lowin">
+		<div class="lowin-brand">
+			<img src="img/kodinger.jpg" alt="logo" id="headImg" class="headView">
+		</div>
+		<div class="lowin-wrapper">
+			<div class="lowin-box lowin-login">
+				<div class="lowin-box-inner">
+					<div>
+						<p>登录社区</p>
+						<div class="lowin-group">
+							<label>手机号 <a href="#" class="login-back-link">登录</a></label>
+							<input id="login_phone" type="text" name="phone" class="lowin-input">
+						</div>
+						<div class="lowin-group password-group">
+							<label>密码 <a href="#" class="forgot-link">忘记密码？</a></label>
+							<input id="login_password" type="password" name="password" autocomplete="current-password"
+								class="lowin-input">
+						</div>
+						<button id="login" class="lowin-btn login-btn">
+							登录
+						</button>
+
+						<div class="text-foot">
+							没有账号？ <a href="" class="register-link">注册</a>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="lowin-box lowin-register">
+				<div class="lowin-box-inner">
+					<div>
+						<p>选择头像</p>
+						<div class="lowin-group">
+							<label>用户名</label>
+							<input id="register_name" type="text" name="name" autocomplete="name" class="lowin-input">
+						</div>
+						<div class="lowin-group">
+							<label>手机号</label>
+							<input id="register_phone" type="text" name="phone" class="lowin-input">
+						</div>
+						<div class="lowin-group">
+							<label>密码</label>
+							<input id="register_password" type="password" name="password"
+								autocomplete="current-password" class="lowin-input">
+						</div>
+						<button id="register" class="lowin-btn">
+							注册
+						</button>
+
+						<div class="text-foot">
+							已经有账户？ <a href="" class="login-link">登录</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<footer class="lowin-footer">
+			Design By @WisdomCommunity.
+		</footer>
+	</div>
+
+	<script src="js/auth.js"></script>
+	<script src="js/jquery-1.11.1.min.js"></script>
+	<script src="layui/layui.js" charset="utf-8"></script>
+	<script>
+		Auth.init({
+			login_url: '#login',
+			forgot_url: '#forgot'
+		});
+
+		// $(function () {
+		// 	$.ajax({
+		// 		type: "GET"
+		// 		, url: "admin/clear"
+		// 	})
+		// })
+
+		layui.use(['layer', 'upload'], function () {
+			let layer = layui.layer;
+			let upload = layui.upload;
+
+			var uploadInst = upload.render({
+				elem: '#headImg' //绑定元素
+				, url: 'owner/register' //上传接口
+				, size: 2000
+				, auto: false
+				, data: {
+					ownerId: function () {
+						return $('#register_phone').val();
+					}
+					, ownerName: function () {
+						return $('#register_name').val();
+					}
+					, ownerPassword: function () {
+						return $('#register_password').val();
+					}
+				}
+				, bindAction: "#register"
+				, choose: function (obj) {
+					obj.preview(function (index, file, result) {
+						$('.headView').attr('src', result); //图片链接（base64）
+					});
+				}
+				, done: function (res, index, upload) { //上传后的回调
+					layer.msg(res.msg, { time: 500 }, function () {
+						if (res.code == 0) {
+							window.location.href = "loginPage";
+						}
+					})
+				}
+			});
+
+			$("#register_phone").blur(function () {
+				let ownerId = $("#register_phone").val();
+				if (ownerId == null || ownerId == undefined || !(/^(13[0-9]|14[0-9]|15[0-9]|166|17[0-9]|18[0-9]|19[8|9])\d{8}$/.test(ownerId))) {
+					layer.msg("请输入正确的手机号")
+				}
+			})
+			$("#register_name").blur(function () {
+				let ownerName = $("#register_name").val();
+				if (ownerName == null || ownerName == undefined || !(/^[\u4E00-\u9FA5A-Za-z0-9]+$/.test(ownerName))) {
+					layer.msg("请输入正确的用户名")
+				}
+			})
+			$("#register_password").blur(function () {
+				let ownerPassword = $("#register_password").val();
+				if (ownerPassword == null || ownerPassword == undefined || !(/^[A-Za-z0-9]+$/.test(ownerPassword))) {
+					layer.msg("请输入正确的密码")
+				}
+			})
+			// $("#register").click(function () {
+			// let ownerId = $("#register_phone").val();
+			// let ownerName = $("#register_name").val();
+			// let ownerPassword = $("#register_password").val();
+			// if (ownerId == null || ownerId == undefined || !(/^(13[0-9]|14[0-9]|15[0-9]|166|17[0-9]|18[0-9]|19[8|9])\d{8}$/.test(ownerId))) {
+			// 	layer.msg("请输入正确的手机号")
+			// 	return;
+			// }
+			// if (ownerName == null || ownerName == undefined || !(/^[\u4E00-\u9FA5A-Za-z0-9]+$/.test(ownerName))) {
+			// 	layer.msg("用户名含有特殊字符")
+			// 	return;
+			// }
+			// if (ownerPassword == null || ownerPassword == undefined || !(/^[A-Za-z0-9]+$/.test(ownerPassword))) {
+			// 	layer.msg("密码只能含有英文字母和数字")
+			// 	return;
+			// }
+			// 	$.ajax({
+			// 		type: "POST"
+			// 		, url: "owner/register"
+			// 		, dataType: "json"F
+			// 		, data: "ownerId=" + ownerId + "&ownerName=" + ownerName + "&ownerPassword=" + ownerPassword
+			// 		, success: function (data) {
+			// 			layer.msg(data.msg, { time: 500 }, function () {
+			// 				if (data.code == 0) {
+			// 			 		window.location.href = "loginPage";
+			// 				}
+			// 			})
+			// 		}
+			// 	})
+			// })
+			$("#login").click(function () {
+				let ownerId = $("#login_phone").val();
+				let ownerPassword = $("#login_password").val();
+				if (ownerPassword == null || ownerPassword == undefined || !(/^[A-Za-z0-9]+$/.test(ownerPassword))) {
+					layer.msg("密码由英文字母和数字组成");
+					return;
+				}
+				if ((/^(13[0-9]|14[0-9]|15[0-9]|166|17[0-9]|18[0-9]|19[8|9])\d{8}$/.test(ownerId))) {
+					$.ajax({
+						type: "POST"
+						, url: "owner/login"
+						, dataType: "json"
+						, data: "ownerId=" + ownerId + "&ownerPassword=" + ownerPassword
+						, success: function (data) {
+							layer.msg(data.msg, { time: 500 }, function () {
+								if (data.code == 0) {
+									window.location.href = "indexPage";
+								}
+							})
+						}
+					})
+				} else if (/^\w+$/.test(ownerId)) {
+					window.location.href = "admin/login?" + "adminName=" + ownerId + "&adminPassword=" + ownerPassword;
+					$.ajax({
+					type: "POST"
+					, url: "admin/login"
+					, dataType: "json"
+					, data: "adminName=" + ownerId + "&adminPassword=" + ownerPassword
+					, success: function (data) {
+						console.log(data);
+						layer.msg(data.msg, { time: 500 }, function () {
+							if (data.code == 0) {
+								window.location.href = "index";
+							}
+						})
+						}
+					})
+				} else {
+					layer.msg("请输入正确的手机号格式");
+				}
+			})
+		})
+	</script>
+</body>
+
+</html>

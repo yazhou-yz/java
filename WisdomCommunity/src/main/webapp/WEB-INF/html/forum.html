@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+<meta charset="UTF-8">
+<title>论坛首页</title>
+<link rel="stylesheet" href="css/reset.css" />
+<link rel="stylesheet" href="css/public.css" />
+<link rel="stylesheet" href="css/index.css" />
+</head>
+<body>
+	<div class="indexMain">
+		<div class="indexMain_left">
+			<div class="indexMain_left_con">
+				<!--有主题图循环开始-->
+				<div class="indexCon_msg">
+					<div class="indexCon_msg_pic">
+					<img alt="" src="http://localhost:8080/WisdomCommunity/headicon/timg.jpg" style="width: 60%;"/>
+					</div>
+					<div class="indexCon_msg_detail">
+						<a href="">
+							<div class="indexCon_msg_detail_tittle">
+								<span>管理员</span>
+								<p>关注上海车牌竞拍方面的资讯，对当月竞拍分析发表独到见解</p>
+							</div>
+						</a>
+						<div class="havePic" style="display: inline-block;">
+						<img alt="" src="http://localhost:8080/WisdomCommunity/headicon/timg.jpg" style="width: 60%;"/>
+							<!-- <a href=""><div class="havePic_head"></div></a> -->
+						</div>
+						<div class="indexCon_msg_detail_other">
+							<ul>
+								<li>花开花落</li>
+								<li>1天前</li>
+								<li>21</li>
+								<li>28</li>
+							</ul>
+						</div>
+					</div>
+					<div class="clear"></div>
+				</div>
+
+			</div>
+			
+			<div class="indexFooter">
+				<div class="indexFooter_con">
+					<a href="javascript:;"></a> <a id="pages" href="javascript:">></a>
+				</div>
+			</div>
+		</div>
+		<div class="indexMain_right">
+			<div class="indexMain_rightCon">
+				<a href="write" class="newMsg" style="background-color: rgb(107,202,210);">发新帖</a>
+				<div class="indexSearch">
+					<input type="text" placeholder="请输入关键词" /> <input type="submit"
+						value="搜索" style="background-color: rgb(107,202,210);"/>
+				</div>
+				<div class="indexPublic">
+					<div class="indexPublic_head">本周热议</div>
+					<div class="indexPublic_con">
+						<ul class="weekHot">
+							<li><a href="">关注上海车牌竞拍方面的资讯</a><span>29</span></li>
+							<li><a href="">关注上海车牌竞拍方面的资讯</a><span>29</span></li>
+							<li><a href="">关注上海车牌竞拍方面的资讯</a><span>29</span></li>
+							<li><a href="">关注上海车牌竞拍方面的资讯</a><span>29</span></li>
+							<li><a href="">关注上海车牌竞拍方面的资讯</a><span>29</span></li>
+							<li><a href="">关注上海车牌竞拍方面的资讯</a><span>29</span></li>
+						</ul>
+					</div>
+				</div>
+				<div class="indexPublic"></div>
+			</div>
+		</div>
+		<div class="clear"></div>
+	</div>
+	<footer class="publicFooter"> </footer>
+	<script src="js/jquery-1.11.1.min.js"></script>
+	<script>
+		$.ajax({
+			type : "POST",
+			url : 'forum/searchcount',
+			dataType : 'json',
+			success : function(data) {
+				console.log("============");
+				console.log(data.count/5);
+				for(var k=1;k<1;k++){
+				$("#pages").before("<a href='javascript:;'>"+k+"</a>")
+				}
+				for(var i=0;i<data.data.length;i++){
+					$('.indexFooter').before("<div class='indexMain_left_con'><div class='indexCon_msg'><div class='indexCon_msg_pic'><img src='"+data.data[i].owner_headicon+"'/></div><div class='indexCon_msg_detail'><a href='forum/searchInvitation?forum_id="+data.data[i].forum_id+"'><div class='indexCon_msg_detail_tittle'><span>闲购</span><p>"+data.data[i].theme+"</p></div></a><div class='havePic' style='display: inline-block;'><img alt='' src='"+data.data[i].img+"' style='width: 60%;'/></div><div class='indexCon_msg_detail_other'><ul><li>"+data.data[i].owner_name+"</li><li>"+data.data[i].forum_date+"</li><li>21</li><li>28</li></ul></div></div><div class='clear'></div></div></div>")
+				}
+			}
+		})
+		
+		$('.indexFooter_con').on('click', 'a', function() {
+			console.log(111);
+			var page = $(this).text();
+			console.log(page)
+			$.ajax({
+				type:'POST',
+				url:'forum/search',
+				data:'page='+page,
+				dataType:'json',
+				success:function(data){
+					console.log("=======================")
+					console.log(data)
+					/* $(".indexMain_left>div").not(":eq(0)").remove(); */
+					/* $('.indexMain_left div').not('div:first').remove(); */
+					/* $('.indexMain_left div:not(:first)').each().remove(); */
+					for(var i=0;i<data.data.length;i++){
+						$('.indexFooter').before("<div class='indexMain_left_con'><div class='indexCon_msg'><div class='indexCon_msg_pic'></div><div class='indexCon_msg_detail'><a href='forum/searchInvitation?forum_id="+data.data[i].forum_id+"'><div class='indexCon_msg_detail_tittle'><span>闲购</span><p>"+data.data[i].theme+"</p></div></a><div class='havePic' style='display: inline-block;'><img alt='' src='"+data.data[i].img+"' style='width: 60%;'/></div><div class='indexCon_msg_detail_other'><ul><li>花开花落</li><li>"+data.data[i].forum_date+"</li><li>21</li><li>28</li></ul></div></div><div class='clear'></div></div></div>")
+					}
+				}
+			})
+		})
+		$(".indexMain_left_btn li a").click(function() {
+			$(".indexMain_left_btn li a").removeClass("on");
+			$(this).addClass("on");
+		});
+		window.onscroll = function() {
+			var scrolls = document.body.scrollTop
+					|| document.documentElement.scrollTop;
+			var slided = 60;
+			if (scrolls >= slided) {
+				$(".appear").hide();
+				$(".navFix").show();
+				$(".ltHead").addClass("navTop");
+			} else {
+				$(".appear").show();
+				$(".navFix").hide();
+				$(".ltHead").removeClass("navTop");
+			}
+		};
+	</script>
+</body>
+</html>

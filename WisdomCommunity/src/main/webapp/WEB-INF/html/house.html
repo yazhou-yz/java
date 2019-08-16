@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title> - 数据表格</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="back_css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="back_css/font-awesome.css?v=4.4.0" rel="stylesheet">
+
+    <!-- Data Tables -->
+    <link href="back_css/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet">
+
+    <link href="back_css/animate.css" rel="stylesheet">
+    <link href="back_css/style.css?v=4.1.0" rel="stylesheet">
+    <link rel="stylesheet" href="layui/css/layui.css" media="all">
+    <style type="text/css">
+        .layui-table-view {
+            margin: 0px;
+        }
+
+        .layui-table-view {
+            border-radius: 4px;
+        }
+
+        .layui-table-tool {
+            border-radius: 3px;
+        }
+
+        .ibox-content {
+            padding: 0px;
+            border: none;
+            border-radius: 4px;
+        }
+
+        .ibox {
+            border: none;
+        }
+
+        .layui-btn {
+            background-color: #23b7e5
+        }
+
+        .layui-laypage .layui-laypage-curr .layui-laypage-em {
+            background-color: #23b7e5
+        }
+
+        .layui-form-checked[lay-skin=primary] i {
+            border-color: #23b7e5 !important;
+            background-color: #23b7e5;
+        }
+
+        #hid_btn,
+        #oin_btn {
+            margin-top: 5px;
+        }
+    </style>
+</head>
+
+<body class="gray-bg" style="background-image: url('images/riski-andriansyah-Gl6GljPtJpo-unsplash.jpg');">
+    <div class="wrapper wrapper-content animated fadeInRight" >
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                        <div class="layui-form">
+                            <div class="layui-form-item" style="padding: 10px 0;margin: auto;">
+                                <label class="layui-form-label">门牌号</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" id="hid" lay-verify="title" autocomplete="off"
+                                        placeholder="请输入门牌号" class="layui-input">
+                                </div>
+                                <div class="layui-input-inline">
+                                    <button class="layui-btn layui-btn-sm" id="hid_btn"><i
+                                            class="layui-icon layui-icon-search"></i></button>
+                                </div>
+                                <label class="layui-form-label">业主名</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" id="oin" lay-verify="title" autocomplete="off"
+                                        placeholder="请输入业主名" class="layui-input">
+                                </div>
+                                <div class="layui-input-inline">
+                                    <button class="layui-btn layui-btn-sm" id="oin_btn"><i
+                                            class="layui-icon layui-icon-search"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <table class="layui-hide" id="test" lay-filter="house" style="border: none;"></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 全局js -->
+    <script src="back_js/jquery.min.js?v=2.1.4"></script>
+    <script src="back_js/bootstrap.min.js?v=3.3.6"></script>
+    <script type="text/html" id="toolbarHead">
+        <div class="layui-btn-container">
+                <div class="layui-btn-container">
+                        <button class="layui-btn layui-btn-sm" lay-event="add">房屋添加</button>
+                        <button class="layui-btn layui-btn-sm" lay-event="refresh"><i
+                            class="layui-icon">&#xe669;</i></button>
+                        <!-- <button class="layui-btn layui-btn-sm" lay-event="del">删除</button> -->
+                        <!-- <button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button> -->
+                </div>
+        </div>
+      </script>
+
+    <script src="layui/layui.js" charset="utf-8"></script>
+    <script src="back_js/jquery-3.4.1.js"></script>
+    <script>
+        layui.use(['table'], function () {
+            var table = layui.table;
+            var layer = layui.layer;
+
+            let table_static = table.render({
+                elem: '#test'
+                , url: 'house/search'
+                , toolbar: '#toolbarHead'
+                , title: '用户数据表'
+                , cols: [[
+                    { type: 'checkbox', fixed: 'left' }
+                    , { field: 'house_id', title: '门牌号', sort: true }
+                    , { field: 'house_area', title: '房屋面积', edit: 'text', sort: true }
+                    , { field: 'house_owner', title: '业主', edit: 'text', sort: true }
+                ]]
+                , page: true
+            });
+
+            $("#hid_btn").click(function () {
+                let hid = $("#hid").val();
+                if (hid == null || hid == undefined || hid.trim() == "") {
+                    layer.msg("请输入正确门牌号");
+                    return;
+                }
+                $.ajax({
+                    type: "GET"
+                    , url: "house/seachHouseOwner"
+                    , dataType: "json"
+                    , data: "houseId=" + hid
+                    , success: function (data) {
+                        layer.msg(data.msg, { time: 500 }, function () {
+                            if (data.code == 0) {
+                                table_static.reload({
+                                    url: "house/seachHouseOwner"
+                                    , where: {
+                                        houseId: hid
+                                    }
+                                    , page: {
+                                        curr: 1
+                                    }
+                                });
+                            }
+                        });
+                    }
+                })
+            });
+            $("#oin_btn").click(function () {
+                let oin = $("#oin").val();
+                if (oin == null || oin == undefined || oin.trim() == "") {
+                    layer.msg("请输入正确业主名");
+                    return;
+                }
+                $.ajax({
+                    type: "GET"
+                    , url: "house/searchOwnerHouse"
+                    , dataType: "json"
+                    , data: "houseOwner=" + oin
+                    , success: function (data) {
+                        layer.msg(data.msg, { time: 500 }, function () {
+                            if (data.code == 0) {
+                                table_static.reload({
+                                    url: "house/searchOwnerHouse"
+                                    , where: {
+                                        houseOwner: oin
+                                    }
+                                    , page: {
+                                        curr: 1
+                                    }
+                                });
+                            }
+                        });
+                    }
+                })
+            });
+
+            // 单元格编辑
+            table.on('edit(house)', function (obj) {
+                if (obj.field == "house_area") {
+                    if (obj.data.house_area == "" || !(/^\+?[1-9][0-9]*$/.test(obj.data.house_area))) {
+                        layer.msg("面积格式不符合", { time: 500 }, function () {
+                            table_static.reload({
+                                url: "house/search"
+                            })
+                        })
+                        return;
+                    }
+                }
+                if (obj.field == "house_owner") {
+                    if ((/^[0-9]*$/.test(obj.data.house_owner))) {
+                        layer.msg("业主名格式不符合", { time: 500 }, function () {
+                            table_static.reload({
+                                url: "house/search"
+                            })
+                        })
+                        return;
+                    }
+                }
+                $.ajax({
+                    type: "POST"
+                    , url: "house/edit"
+                    , data: {
+                        field: obj.field
+                        , value: obj.value
+                        , houseId: obj.data.house_id
+                    }
+                    , dataType: "json"
+                    , success: function (data) {
+                        layer.msg(data.msg, { time: 500 }, function () {
+                            if (data.code == 0) {
+                                table_static.reload({
+                                    url: "house/seachHouseOwner"
+                                    , where: {
+                                        houseId: obj.data.house_id
+                                    }
+                                    , page: {
+                                        curr: 1
+                                    }
+                                });
+                            }
+                        });
+                    }
+                });
+            });
+
+            //头工具栏事件
+            table.on('toolbar(house)', function (obj) {
+                var checkStatus = table.checkStatus(obj.config.id);
+                switch (obj.event) {
+                    case 'add':
+                        layer.open({
+                            type: 2
+                            , area: ["600px", "480px"]
+                            , content: ["addhouse"]
+                            , btn: ["确定", "取消"]
+                            , yes: function (index, layero) {
+                                let body = layer.getChildFrame("body", index);
+                                let building = body.find("#building option:selected").val();
+                                let uniterm = body.find("#uniterm option:selected").val();
+                                let floor = body.find("#floor option:selected").val();
+                                let num = body.find("#num option:selected").val();
+                                if (building == null || building == undefined || building.trim() == "") {
+                                    layer.msg("请选择楼栋号");
+                                } else if (uniterm == null || uniterm == undefined || uniterm.trim() == "") {
+                                    layer.msg("请选择单元总数");
+                                } else if (floor == null || floor == undefined || floor.trim() == "") {
+                                    layer.msg("请选择楼层总数");
+                                } else if (num == null || num == undefined || num.trim() == "") {
+                                    layer.msg("请选择单层户数");
+                                } else {
+                                    $.ajax({
+                                        type: "POST"
+                                        , url: "house/batchAdd"
+                                        , dataType: "json"
+                                        , data: "building=" + building + "&uniterm=" + uniterm + "&floor=" + floor + "&num=" + num
+                                        , success: function (data) {
+                                            layer.msg(data.msg, { time: 500 }, function () {
+                                                if (data.code == 0) {
+                                                    layer.close(index);
+                                                    table_static.reload({
+                                                        url: "house/search"
+                                                    });
+                                                }
+                                            });
+                                        }
+                                    });
+                                }
+                            }
+                        });
+                        break;
+                    case 'refresh':
+                        table_static.reload({
+                            url: "house/search"
+                        });
+                        break;
+                };
+            });
+        });
+    </script>
+
+
+
+    <script src="back_js/plugins/jeditable/jquery.jeditable.js"></script>
+
+    <!-- Data Tables -->
+    <script src="back_js/plugins/dataTables/jquery.dataTables.js"></script>
+    <script src="back_js/plugins/dataTables/dataTables.bootstrap.js"></script>
+
+    <!-- 自定义js -->
+    <script src="back_js/content.js?v=1.0.0"></script>
+
+
+</body>
+
+</html>

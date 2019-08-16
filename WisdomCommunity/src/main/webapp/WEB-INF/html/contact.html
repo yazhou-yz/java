@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Contact</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="keywords" content="" />
+	<script
+		type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+	<!-- css -->
+	<link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+	<link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
+	<link rel="stylesheet" href="css/font-awesome.css" type="text/css" media="all" />
+	<!--// css -->
+	<!-- font -->
+	<link href="http://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+	<link
+		href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic'
+		rel='stylesheet' type='text/css'>
+	<!-- //font -->
+	
+	<!-- ++++++++++++++++++++++++++++ -->
+	<style>
+	    /* input, select {
+	        width: 200px;
+	        height: 35px;
+	    } */
+	
+	    .form-item {
+	        margin: 20px;
+	        width:100%;
+	    }
+	
+	    /* .content {
+	        width: 800px;
+	        margin: 0 auto;
+	    } */
+		
+		/* 百度地图标记 */
+		body, html,#allmap {width: 100%;height: 100%;margin:0;font-family:"微软雅黑";font-size:14px;}
+		#l-map{height:500px;width:100%;}
+		#r-result{width:100%;}
+		/* 百度地图标记 */
+	</style>
+	<!-- ++++++++++++++++++++++++++++ -->
+	
+	
+	
+	<script src="js/jquery-1.11.1.min.js"></script>
+	<script src="js/bootstrap.js"></script>
+	<script src="layui/layui.js" charset="utf-8"></script>
+	<script src="js/login.js"></script>
+	
+	
+	
+	
+</head>
+
+<body>
+	<div class="header-w3layoutstop">
+		<div class="container">
+			<div class="hdr-w3left navbar-left">
+				<p><span class="glyphicon glyphicon-home" style="color: #fff"></span> WisdomCommunity </p>
+			</div>
+			<div class="search-grid">
+				<button class="btn1"><i class="fa fa-cloud" aria-hidden="true"></i> 登录社区</button>
+			</div>
+		</div>
+	</div>
+	<!-- navigation -->
+	<div class="nav-links">
+		<nav class="navbar navbar-inverse">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="indexPage">
+						<h1>智慧家园</h1>
+					</a>
+				</div>
+				<div class="collapse navbar-collapse" id="myNavbar">
+					<ul class="nav navbar-nav link-effect">
+						<li><a href="indexPage">主页</a></li>
+						<li><a href="servicesPage">社区拼车</a></li>
+						<li><a href="projectsPage">社区闲购</a></li>
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span
+									data-hover="Short Codes">生活服务</span> <b class="caret"></b></a>
+							<ul class="dropdown-menu agile_short_dropdown">
+								<li><a href="iconsPage">我要报修</a></li>
+								<li><a href="typographyPage">我要缴费</a></li>
+							</ul>
+						</li>
+						<li class="dropdown" id="user_info">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span
+									id="user_name" data-hover="Short Codes"></span> <b class="caret"></b></a>
+							<ul class="dropdown-menu agile_short_dropdown">
+								<li><a id="edit_password" href="javascript:;">修改密码</a></li>
+								<li><a id="owner_logout" href="javascript:;">退出登录</a></li>
+							</ul>
+						</li>
+						<li class="active"><a href="contactPage">联系我们</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</div>
+	<!-- /navigation -->
+	<!-- banner-->
+	<div class="w3layouts-banner-slider-1">
+	</div>
+	<!-- //banner -->
+	<!-- contact -->
+	<div class="contact">
+		<div class="container">
+			<div class="w3ls-title">
+				<h3 class="agileits-title w3title1">周边信息</h3>
+				<p class="top-p">社区周边3公里生活圈服务生活服务、医院、学校、商场、加油站.</p>
+			</div>
+			
+			
+			
+			<!-- map----------------------------------------------------------- -->
+			<div class="map">
+				<!-- 百度地图内容 -->
+				<div class="content">
+				    <!-- 地图 -->
+				    <div class="form-item">
+				        <div style="width:1100px">
+				            <div id="myMap" style="width:100%;height:550px;"></div>
+				        </div>
+				    </div>
+				    <input type="hidden" class="store_Lng" />
+				    <input type="hidden" class="store_Lat" />
+				</div>
+				
+				<!-- 百度地图内容 -->
+			</div>
+			<!-- //map--------------------------------------------------------------- -->
+			<!-- 百度地图标记 -->
+			<script type="text/javascript">
+			    // 百度地图API功能
+			    var sContent ="天安门坐落在中国北京市中心,故宫的南侧,与天安门广场隔长安街相望,是清朝皇城的大门...";
+			    var map = new BMap.Map("l-map");
+			    
+			    var infoWindow = new BMap.InfoWindow(sContent);  // 创建信息窗口对象
+			    map.openInfoWindow(infoWindow,point); //开启信息窗口
+			        map.enableScrollWheelZoom();//启动鼠标滚轮缩放地图
+			    document.getElementById("r-result").innerHTML = "信息窗口的内容是：<br />" + infoWindow.getContent();
+			</script>
+			<!-- 百度地图标记 -->
+			<!-- ++++++++++++++++++++++++++++++++++++ -->
+			<script src="https://api.map.baidu.com/api?v=2.0&ak=RZZ2gObry82Y2BSzZ1xzMhfm&callback=mapinit"></script>
+			<script src="js/jquery.min.js"></script>
+			<script src="js/index.js"></script>
+			<!-- ++++++++++++++++++++++++++++++++++++ -->
+			
+		</div>
+	</div>
+	<!-- //contact -->
+
+	<!-- footer start here -->
+	<div class="footer-agile jarallax">
+		<div class="container">
+
+			<div class="footer-btm-agileinfo">
+				
+				<div class="col-md-3 col-xs-3 footer-grid w3social">
+					<h3>Navigation</h3>
+					<ul>
+						<li><a href="indexPage">主页</a></li>
+						<li><a href="servicesPage">社区拼车</a></li>
+						<li><a href="projectsPage">社区闲购</a></li>
+						<li><a href="contactPage">联系我们</a></li>
+					</ul>
+				</div>
+				<div class="col-md-6 col-xs-6 footer-grid footer-review">
+					<h3>百度</h3>
+					<form action="#" method="post">
+						<input type="email" name="Email" placeholder="" required="">
+						<input type="submit" value="搜索"><a href="https://www.baidu.com/"></a>
+						<div class="clearfix"> </div>
+					</form>
+					<div class="copy-w3lsright">
+						<p>本网站由 &copy; 2019.组长:吴宗原;技术总监:杨琦;网页总监:赵晓帆;Bug测试:吕龙琦、史亚洲; 
+						<br />
+						合作伙伴
+						<a
+								href="https://www.baidu.com/" target="_blank" title="百度">百度</a> - Collect from <a
+								href="https://www.alibaba.com" title="杨氏财团" target="_blank">杨氏财团</a></p>
+					</div>
+				</div>
+				<div class="clearfix"> </div>
+			</div>
+			<div class="footer-top-agileinfo">
+				<div class="social-wthree-icons bnragile-icons">
+					<ul>
+						<li><a href="#" class="fa fa-facebook icon icon-border facebook"> </a></li>
+						<li><a href="#" class="fa fa-twitter icon icon-border twitter"> </a></li>
+						<li><a href="#" class="fa fa-google-plus icon icon-border googleplus"> </a></li>
+						<li><a href="#" class="fa fa-dribbble icon icon-border dribbble"> </a></li>
+					</ul>
+					<div class="clearfix"> </div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- //footer end here -->
+	<script src="js/responsiveslides.min.js"></script>
+	<!-- start-smooth-scrolling -->
+	<script type="text/javascript" src="js/move-top.js"></script>
+	<script type="text/javascript" src="js/easing.js"></script>
+	<script type="text/javascript">
+		jQuery(document).ready(function ($) {
+			$(".scroll").click(function (event) {
+				event.preventDefault();
+				$('html,body').animate({ scrollTop: $(this.hash).offset().top }, 1000);
+			});
+		});
+	</script>
+	<!-- //start-smoth-scrolling -->
+	<!-- here stars scrolling icon -->
+	<script type="text/javascript">
+		$(document).ready(function () {
+			/*
+				var defaults = {
+				containerID: 'toTop', // fading element id
+				containerHoverID: 'toTopHover', // fading element hover id
+				scrollSpeed: 1200,
+				easingType: 'linear' 
+				};
+			*/
+
+			$().UItoTop({ easingType: 'easeOutQuart' });
+
+		});
+	</script>
+</body>
+
+</html>

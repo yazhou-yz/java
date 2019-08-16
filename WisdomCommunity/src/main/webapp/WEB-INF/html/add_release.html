@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="layui/css/layui.css" media="all">
+    <style>
+        .layui-btn {
+            background-color: #6bcad2;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="layui-form" style="background-image: url('images/叶子.jpg'); background-size: cover;">
+        <div class="layui-form-item">
+            <label class="layui-form-label">车牌号</label>
+            <div class="layui-input-inline">
+                <select id="plate" lay-verify="required">
+                    <option value=""></option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">出发时间</label>
+            <div class="layui-input-inline">
+                <input type="text" id="car_time" required lay-verify="required" placeholder="请选择出发时间" autocomplete="off"
+                    class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">目的地</label>
+            <div class="layui-input-inline">
+                <input type="text" id="car_destination" required lay-verify="required" placeholder="请输入目的地"
+                    autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">剩余座位</label>
+            <div class="layui-input-inline">
+                <input type="number" id="car_seat" required lay-verify="required" placeholder="请输入剩余座位"
+                    autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">车辆照片</label>
+            <button type="button" class="layui-btn" id="cat_img">
+                <i class="layui-icon">&#xe67c;</i>上传图片
+            </button>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label"></label>
+            <button type="button" class="layui-btn" id="sub">确定</button>
+        </div>
+    </div>
+</body>
+<script src="layui/layui.js" charset="utf-8"></script>
+<script text="text/javascript">
+
+    layui.use(['form', 'laydate', 'jquery', 'upload', 'layer'], function () {
+        let form = layui.form;
+        let laydate = layui.laydate;
+        let $ = layui.$;
+        let layer = layui.layer;
+        let upload = layui.upload;
+        let carOid = "";
+        $.ajax({
+            type: "GET"
+            , url: "owner/getInfo"
+            , dataType: "json"
+            , cache: true
+            , success: function (data) {
+                carOid = data.ownerId;
+                if (data != null) {
+                    $.ajax({
+                        type: "GET"
+                        , url: "car/verify"
+                        , dataType: "json"
+                        , data: "carOid=" + carOid
+                        , success: function (data) {
+                            $.each(data.data, function (index, value) {
+                                let option = $("<option>").attr({
+                                    value: value.car_plate
+                                    , selected: "selected"
+                                }).text(value.car_plate);
+                                $("#plate").append(option);
+                                form.render();
+                            })
+                        }
+                    })
+                }
+            }
+        })
+        let carPlate = $("#plate option:selected").val();
+        let carDestination = $("#car_destination").val();
+        let carTime = $("#car_time").val();
+        let carSeat = $("#car_seat").val();
+
+        var uploadInst = upload.render({
+            elem: '#cat_img'
+            , url: 'car/add'
+            , auto: false
+            , bindAction: "#sub"
+            , data: {
+                carDestination: function () {
+                    // if (carDestination == null || carDestination == undefined || carDestination.trim() == "") {
+                    //     layer.msg("请输入正确的目的地");
+                    //     return;
+                    // }
+                    return $("#car_destination").val();
+                }
+                , carPlate: function () {
+                    // if (carPlate == null || carPlate == undefined || carPlate.trim() == "") {
+                    //     layer.msg("请选择正确的车牌号");
+                    //     return;
+                    // }
+                    return $("#plate option:selected").val();
+                }
+                , carTime: function () {
+                    // if (carTime == null || carTime == undefined || carTime.trim() == "") {
+                    //     layer.msg("请选择正确出发时间");
+                    //     return;
+                    // }
+                    return $('#car_time').val();
+                }
+                , carOid: function () {
+                    return carOid;
+                }
+                , carSeat: function () {
+                    // if (carSeat == null || carSeat == undefined || carSeat <= 0) {
+                    //     layer.msg("请输入正确的车牌号");
+                    //     return;
+                    // }
+                    return $('#car_seat').val();
+                }
+            }
+            , done: function (res) {
+                layer.msg(res.msg, { time: 1000 }, function () {
+                    if (res.code == 0) {
+                        var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                        parent.layer.close(index); //再执行关闭
+                    }
+                })
+            }
+        })
+
+        laydate.render({
+            elem: '#car_time'
+            , type: 'datetime'
+            , min: 0
+            , max: 1
+        });
+    })
+</script>
+
+</html>

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<!-- /*/ 
+如果没有使用thymleaf的模板引擎才能看到该注释
+/*/ -->
+<!-- th:text:替换到 标签的内容 
+      当我们当作静态html打开时，看到的是我是div当thymleaf打开时看到的是${title}的值 -->
+<div th:text="${title}">我是div</div>
+</body>
+</html>

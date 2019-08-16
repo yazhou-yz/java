@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 通知DaoMapper -->
+<mapper namespace="com.wisdom.dao.InformDao">
+	<!-- 添加 -->
+	<insert id="add">
+		insert into inform (inform_time,inform_title,inform_message) values
+		(#{param1},#{param2},#{param3})
+	</insert>
+	<!-- 编辑 -->
+	<update id="edit">
+		update inform set inform_title = #{param2},inform_message = #{param3} where
+		inform_id = #{param1}
+	</update>
+	<update id="editTitle">
+		update inform set inform_title = #{param2} where inform_id = #{param1}
+	</update>
+	<update id="editMessage">
+	update inform set inform_message = #{param3} where inform_id = #{param1}
+	</update>
+	<!-- 查看 -->
+	<select id="search" resultType="map">
+     select inform_id,inform_title,inform_time from inform 
+	</select>
+	         <!-- 查询分页 -->
+	<select id="searchAllCount" resultType="int">
+	select count(*) from inform
+	</select>  
+	       <!-- 查看通知详细内容 -->       
+	<select id="searchMseeageForId" resultType="map">
+	select inform_title,inform_time,inform_message from inform where inform_id = #{param1}
+	</select>
+	<!-- 查询最新通知的表头 -->
+	<select id="searchTitle" resultType="map">
+	select inform_title,inform_message from inform order by inform_time DESC limit 1
+	</select>
+	
+</mapper>
+

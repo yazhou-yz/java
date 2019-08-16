@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>密码修改</title>
+	<link rel="stylesheet" href="css/auth.css">
+	<link rel="stylesheet" href="layui/css/layui.css" media="all">
+</head>
+
+<body>
+	<div class="lowin">
+		<div class="lowin-brand">
+			<img src="img/kodinger.jpg" alt="logo">
+		</div>
+		<div class="lowin-wrapper">
+			<div class="lowin-box lowin-login">
+				<div class="lowin-box-inner">
+					<div>
+						<div class="lowin-group password-group">
+							<label>旧密码</label>
+							<input id="old_pwd" type="password" name="password" autocomplete="current-password"
+								class="lowin-input">
+						</div>
+						<div class="lowin-group password-group">
+							<label>新密码</label>
+							<input id="new_pwd" type="password" name="password" autocomplete="current-password"
+								class="lowin-input">
+						</div>
+						<div class="lowin-group password-group">
+							<label>确认新密码</label>
+							<input id="re_pwd" type="password" name="password" autocomplete="current-password"
+								class="lowin-input">
+						</div>
+						<div>
+							<button id="sub" class="lowin-btn login-btn" style="width: 30%">
+								确定
+							</button>
+							<button id="return" class="lowin-btn login-btn" style="width: 30%;float:right;">
+								返回
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="js/jquery-1.11.1.min.js"></script>
+	<script src="layui/layui.js" charset="utf-8"></script>
+	<script src="js/login.js"></script>
+</body>
+
+</html>

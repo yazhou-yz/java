@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title> - 数据表格</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="back_css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="back_css/font-awesome.css?v=4.4.0" rel="stylesheet">
+
+    <!-- Data Tables -->
+    <link href="back_css/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet">
+
+    <link href="back_css/animate.css" rel="stylesheet">
+    <link href="back_css/style.css?v=4.1.0" rel="stylesheet">
+    <link rel="stylesheet" href="layui/css/layui.css" media="all">
+    <style type="text/css">
+        .layui-table-view {
+            margin: 0px;
+        }
+
+        .layui-table-view {
+            border-radius: 4px;
+        }
+
+        .layui-table-tool {
+            border-radius: 3px;
+        }
+
+        .ibox-content {
+            padding: 0px;
+            border: none;
+            border-radius: 4px;
+        }
+
+        .ibox {
+            border: none;
+        }
+
+        .layui-btn {
+            background-color: #23b7e5
+        }
+
+        .layui-laypage .layui-laypage-curr .layui-laypage-em {
+            background-color: #23b7e5
+        }
+
+        .layui-form-checked[lay-skin=primary] i {
+            border-color: #23b7e5 !important;
+            background-color: #23b7e5;
+        }
+
+        .layui-form-label {
+            width: 87px;
+        }
+
+        #staff {
+            margin-top: 5px;
+        }
+    </style>
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                        <div class="layui-form">
+                            <div class="layui-form-item" style="padding: 10px 0;margin: auto;">
+                                <label class="layui-form-label">业主姓名</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="owner_name" lay-verify="title" autocomplete="off"
+                                        placeholder="请输入业主姓名" class="layui-input">
+                                </div>
+                                <button class="layui-btn layui-btn-sm" id="staff"><i
+                                        class="layui-icon layui-icon-search"></i></button>
+                            </div>
+                        </div>
+                        <table class="layui-hide" id="test" lay-filter="staff" style="border: none;"></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 全局js -->
+    <script src="back_js/jquery.min.js?v=2.1.4"></script>
+    <script src="back_js/bootstrap.min.js?v=3.3.6"></script>
+    <script type="text/html" id="toolbarHead">
+        <div class="layui-btn-container">
+                <div class="layui-btn-container">
+                        <button class="layui-btn layui-btn-sm" lay-event="refresh"><i
+                            class="layui-icon">&#xe669;</i></button>
+                        <!-- <button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button> -->
+                </div>
+        </div>
+      </script>
+
+    <script src="layui/layui.js" charset="utf-8"></script>
+    <script src="back_js/jquery-3.4.1.js"></script>
+    <script>
+        layui.use(['table'], function () {
+            var table = layui.table;
+            var layer = layui.layer;
+
+            let table_static = table.render({
+                elem: '#test'
+                , url: 'owner/search'
+                , toolbar: '#toolbarHead'
+                , title: '用户数据表'
+                , cols: [[
+                    { type: 'checkbox', fixed: 'left' }
+                    , { field: 'ownerId', title: '业主电话', sort: true }
+                    , { field: 'ownerName', title: '业主名称', edit: 'text', sort: true }
+                    , { field: 'ownerHid', title: '业主门牌号', edit: 'text', sort: true }
+                ]]
+                , page: true
+            });
+
+            $("#staff").click(function () {
+                let ownerName = $("input[name='owner_name']").val();
+                table_static.reload({
+                    url: "owner/search"
+                    , where: {
+                        staffName: ownerName
+                    }
+                    , page: {
+                        curr: 1
+                    }
+                });
+            });
+
+            // 单元格编辑
+            table.on('edit(staff)', function (obj) {
+                field = "";
+                if (obj.field == "staffName") {
+                    if (obj.data.staffName == "" || !(/^[\u4e00-\u9fa5]{0,}$/.test(obj.data.staffName))) {
+                        layer.msg("姓名格式不符合", { time: 500 }, function () {
+                            table_static.reload({
+                                url: "staff/refresh"
+                            })
+                        })
+                        return;
+                    }
+                    field = "staff_name";
+                }
+                if (obj.field == "staffType") {
+                    if (obj.data.staffType == "" || !(/^[\u4e00-\u9fa5]{0,}$/.test(obj.data.staffType))) {
+                        layer.msg("工种格式不符合", { time: 500 }, function () {
+                            table_static.reload({
+                                url: "staff/refresh"
+                            })
+                        })
+                        return;
+                    }
+                    field = "staff_type";
+                }
+                if (obj.field == "staffPhone") {
+                    if (!(/^(13[0-9]|14[0-9]|15[0-9]|166|17[0-9]|18[0-9]|19[8|9])\d{8}$/.test(obj.data.staffPhone))) {
+                        layer.msg("电话格式不符合", { time: 500 }, function () {
+                            table_static.reload({
+                                url: "staff/refresh"
+                            })
+                        })
+                        return;
+                    }
+                    field = "staff_phone";
+                }
+                if (obj.field == "staffStatus") {
+                    if (!(/^[0-3]*$/.test(obj.data.staffStatus))) {
+                        layer.msg("状态格式不正确", { time: 500 }, function () {
+                            table_static.reload({
+                                url: "staff/refresh"
+                            })
+                        })
+                        return;
+                    }
+                    field = "staff_status";
+                }
+                table_field = obj.field;
+                table_value = obj.value;
+                $.ajax({
+                    type: "POST"
+                    , url: "staff/edit"
+                    , data: {
+                        field: field
+                        , value: obj.value
+                        , staffId: obj.data.staffId
+                    }
+                    , dataType: "json"
+                    , success: function (data) {
+                        layer.msg(data.msg, { time: 500 }, function () {
+                            if (data.code == 0) {
+                                table_static.reload({
+                                    url: "staff/search" + "?" + table_field + "=" + table_value
+                                    , page: {
+                                        curr: 1
+                                    }
+                                });
+                            }
+                        });
+                    }
+                });
+            });
+
+            //头工具栏事件
+            table.on('toolbar(staff)', function (obj) {
+                var checkStatus = table.checkStatus(obj.config.id);
+                switch (obj.event) {
+                    case 'add':
+                        layer.open({
+                            type: 2
+                            , area: ["600px", "480px"]
+                            , content: ["addstaff", "no"]
+                            , btn: ["确定", "取消"]
+                            , yes: function (index, layero) {
+                                let body = layer.getChildFrame("body", index);
+                                let staff_name = body.find("input[name='staff_name']").val();
+                                let staff_type = body.find("input[name='staff_type']").val();
+                                let staff_phone = body.find("input[name='staff_phone']").val();
+                                let staff_status = body.find("input[name='staff_status']").val();
+                                if (staff_name == null || staff_name == undefined || staff_name.trim() == "") {
+                                    layer.msg("请输入姓名");
+                                } else if (staff_type == null || staff_type == undefined || staff_type.trim() == "") {
+                                    layer.msg("请输入工种");
+                                } else if (staff_phone == null || staff_phone == undefined || staff_phone.trim() == "") {
+                                    layer.msg("请输入电话");
+                                } else if (staff_status == null || staff_status == undefined || staff_status.trim() == "") {
+                                    layer.msg("请输入状态");
+                                } else {
+                                    $.ajax({
+                                        type: "POST"
+                                        , url: "staff/add"
+                                        , dataType: "json"
+                                        , data: "staffName=" + staff_name + "&staffType=" + staff_type + "&staffPhone=" + staff_phone + "&staffStatus=" + staff_status
+                                        , success: function (data) {
+                                            layer.msg(data.msg, { time: 500 }, function () {
+                                                if (data.code == 0) {
+                                                    layer.close(index);
+                                                    table_static.reload({
+                                                        url: "staff/search"
+                                                    });
+                                                }
+                                            });
+                                        }
+                                    });
+                                }
+                            }
+                        });
+                        break;
+                    case 'refresh':
+                        table_static.reload({
+                            url: "owner/search"
+                        });
+                        break;
+                };
+            });
+        });
+    </script>
+
+
+
+    <script src="back_js/plugins/jeditable/jquery.jeditable.js"></script>
+
+    <!-- Data Tables -->
+    <script src="back_js/plugins/dataTables/jquery.dataTables.js"></script>
+    <script src="back_js/plugins/dataTables/dataTables.bootstrap.js"></script>
+
+    <!-- 自定义js -->
+    <script src="back_js/content.js?v=1.0.0"></script>
+
+
+</body>
+
+</html>

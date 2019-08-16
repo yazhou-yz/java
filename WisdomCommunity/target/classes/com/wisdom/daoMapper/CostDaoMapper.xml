@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.wisdom.dao.CostDao">
+	<!-- 添加 -->
+  	<insert id="add" >
+  		insert into cost (cost_property,cost_status,cost_oid,cost_hid,cost_time) values (#{param1},#{param2}, #{param3},#{param4},#{param5})
+  	</insert>
+  	
+  	<!-- 编辑 -->
+  	 <update id="edit" >
+  		update cost set ${param2}=#{param3} where cost_hid = #{param1}
+  	</update>
+  	
+  	<!-- 编辑金额 -->
+    <!-- <update id="editProperty" >
+  		update cost set cost_property = #{param2} where cost_id = #{param1}
+  	</update> --> 
+  	
+  	<!-- 编辑缴费状态 -->
+  	 <!-- <update id="editStatus" > 
+  		update cost set cost_status = #{param2} where cost_id = #{param1}
+  	</update> -->  
+  	
+  	<!-- 查询全表 -->
+	<select id="search" resultType="map" >
+		select * from cost 
+	</select>
+	
+	<!-- 查询总条数 -->
+	<select id="searchAllCount" resultType="int">
+	select count(*) from cost
+	</select>
+	
+	<!-- 根据业主id查询 -->
+	<select id="searchByOwnerId" resultType="map" >
+		select * from cost where cost_oid = #{param1}
+	</select>
+	
+	<!-- 根据门牌号查询 -->
+	<select id="searchByHouseId" resultType="map" >
+		select * from cost where cost_hid = #{param1}
+	</select>
+	
+	<!-- 根据缴费状态查询-->
+	<select id="searchCostStatus" resultType="map" >
+		select cost_id,cost_property,cost_status,cost_oid,cost_hid,cost_time from cost where cost_status = #{patam1}
+	</select>
+	
+	
+</mapper>

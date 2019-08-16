@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.wisdom.dao.RepairsDao">
+	<!-- 添加 -->
+  	<insert id="add" >
+  		insert into repairs (repairs_type,repairs_need,repairs_state,repairs_time,repairs_oid,repairs_trace) values (#{param1},#{param2},#{param3},#{param4},#{param5},#{param6})                       
+  	</insert>
+  	
+  	<!-- 用户编辑(可以编辑报修类型、报修描述) -->
+  	<update id="editOwner" >
+  		update repairs set repairs_type = #{param2}, repairs_need = #{param3} where repairs_oid = #{param1}
+  	</update>
+  	<!-- 管理员编辑(可以编辑报修状态) -->
+  	<update id="editStaff">
+  	    update repairs set ${param1} = #{param2}, repairs_trace = #{param4} where repairs_id = #{param3}
+  	</update>
+  	<!-- 查询 -->
+	<select id="search" resultType="map">
+		select * from repairs
+	</select>
+	<!-- 查询分页 -->
+	<select id="searchCount" resultType="int">
+	    select count(*) from repairs
+	</select>
+	<!-- 通过用户手机号id查询报修的类型、报修的状态 -->
+	<select id="searchRepairsForOid" resultType="map">
+	   select * from repairs where repairs_oid = #{param1}
+	</select>
+	<!-- 根据报修类型查询 -->
+	<select id="searchTypeForRepairs" resultType="map">
+	   select * from repairs where repairs_type = #{param1}
+	</select>
+	<!-- 根据报修状态查询 -->
+	<select id="searchStateForRepairs" resultType="map">
+	  select repairs_oid,repairs_time,repairs_type from repairs where repairs_state = #{param1}
+	</select>
+	
+	
+</mapper>
