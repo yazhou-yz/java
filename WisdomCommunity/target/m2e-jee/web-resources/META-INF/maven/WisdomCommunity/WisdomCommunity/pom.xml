@@ -19,7 +19,7 @@
         <servlet.version>4.0.1</servlet.version>
         <jsp.version>2.3.3</jsp.version>
         <el.version>3.0.0</el.version>
-        <mysql.version>8.0.17</mysql.version>
+        <mysql.version>8.0.28</mysql.version>
         <mybatis.version>3.5.2</mybatis.version>
         <mybatis-spring.version>2.0.2</mybatis-spring.version>
         <commons-fileupload.version>1.4</commons-fileupload.version>
